@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: heka
+  labels:
+    app: heka
+spec:
+  containers:
+    - name: heka
+      image: {{ namespace }}/lma:{{ tag }}
+      imagePullPolicy: Always
