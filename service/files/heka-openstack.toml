@@ -1,0 +1,12 @@
+[openstack_log_decoder]
+type = "SandboxDecoder"
+filename = "lua_decoders/os_openstack_log.lua"
+
+[openstack_log_decoder.config]
+pattern_short = "{{ heka_container_name_pattern_short }}"
+pattern_long = "{{ heka_container_name_pattern_long }}"
+
+[docker_log_input]
+type = "DockerLogInput"
+decoder = "openstack_log_decoder"
+log_decode_failures = false
