@@ -1,0 +1,4 @@
+%microservices ALL=(root) NOPASSWD: /bin/chown heka\:microservices /var/log/microservices, /usr/bin/chown heka\:microservices /var/log/microservices
+%microservices ALL=(root) NOPASSWD: /bin/chmod 2775 /var/log/microservices, /usr/bin/chmod 2775 /var/log/microservices
+%microservices ALL=(root) NOPASSWD: /bin/chown heka\: /var/cache/hekad, /usr/bin/chown heka\: /var/cache/hekad
+%microservices ALL=(root) NOPASSWD: /bin/chown heka\:microservices /var/lib/microservices/heka, /usr/bin/chown heka\:microservices /var/lib/microservices/heka
