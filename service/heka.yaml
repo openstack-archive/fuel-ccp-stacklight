@@ -1,0 +1,45 @@
+service:
+  name: heka
+  daemonset: true
+  node-selector:
+    openstack-compute-controller: "true"
+  containers:
+    - name: heka
+      image: heka
+      probes:
+        readiness: "true"
+        liveness: "true"
+      volumes:
+        - name: docker-sock
+          type: host
+          path: /run/docker.sock
+      daemon:
+        command: hekad --config=/etc/heka
+        dependencies:
+          - elasticsearch
+        files:
+          - heka-global.toml
+          - heka-elasticsearch.toml
+          - heka-mariadb.toml
+          - heka-openstack.toml
+          - heka-rabbitmq.toml
+          - os-openstack-log.lua
+files:
+  heka-global.toml:
+    path: /etc/heka/heka-global.toml
+    content: heka-global.toml.j2
+  heka-elasticsearch.toml:
+    path: /etc/heka/heka-elasticsearch.toml
+    content: heka-elasticsearch.toml.j2
+  heka-mariadb.toml:
+    path: /etc/heka/heka-mariadb.toml
+    content: heka-mariadb.toml.j2
+  heka-openstack.toml:
+    path: /etc/heka/heka-openstack.toml
+    content: heka-openstack.toml
+  heka-rabbitmq.toml:
+    path: /etc/heka/heka-rabbitmq.toml
+    content: heka-rabbitmq.toml.j2
+  os-openstack-log.lua:
+    path: /usr/share/heka/lua_decoders/os_openstack_log.lua
+    content: heka-os-openstack-log.lua.j2
