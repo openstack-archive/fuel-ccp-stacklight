@@ -1,0 +1,10 @@
+[hekad]
+maxprocs = {{ heka_max_procs }}
+
+[debug_output]
+type = "LogOutput"
+message_matcher = "Fields[payload_name] == 'debug'"
+encoder = "rst_encoder"
+
+[rst_encoder]
+type = "RstEncoder"
