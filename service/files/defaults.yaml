@@ -1,7 +1,4 @@
 configs:
-  elasticsearch_port: 9200
-  elasticsearch_cluster_port: 9300
-  kibana_port: 5601
-  heka_max_procs: 2
-  heka_log_directory_root: "/var/log"
-  heka_service_pattern: "^k8s_(.-)%..*"
+  influxdb_port: 8086
+versions:
+    influxdb_version: "0.13.0"
