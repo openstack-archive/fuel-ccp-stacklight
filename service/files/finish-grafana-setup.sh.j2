@@ -1,0 +1,38 @@
+#!/bin/bash
+
+echo "Waiting for Grafana to come up..."
+until $(curl --fail --output /dev/null --silent http://{{ grafana_user }}:{{ grafana_password }}@localhost:{{ grafana_port }}/api/org); do
+    printf "."
+    sleep 2
+done
+echo -e "Grafana is up and running.\n"
+
+echo "Creating InfluxDB datasource..."
+curl -i -XPOST -H "Accept: application/json" -H "Content-Type: application/json" "http://{{ grafana_user }}:{{ grafana_password }}@localhost:{{ grafana_port }}/api/datasources" -d '
+{
+    "name": "MCP InfluxDB",
+    "type": "influxdb",
+    "access": "proxy",
+    "isDefault": true,
+    "url": "'"http://{{ influxdb_host }}:{{ influxdb_port }}"'",
+    "password": "'"{{ influxdb_password }}"'",
+    "user": "'"{{ influxdb_user }}"'",
+    "database": "'"{{ influxdb_database }}"'"
+}'
+if [ $? -ne 0 ]; then
+    echo "Can not create InfluxDB datasource"
+    exit 1
+fi
+echo -e "InfluxDB datasource was successfully created.\n"
+
+echo "Importing default dashboards..."
+for dashboard in {{ dashboard_location }}/*.json; do
+    echo -e "\tImporting ${dashboard}..."
+    curl -i -XPOST --data "@${dashboard}" -H "Accept: application/json" -H "Content-Type: application/json" "http://{{ grafana_user }}:{{ grafana_password}}@localhost:{{ grafana_port }}/api/dashboards/db"
+    if [ $? -ne 0 ]; then
+        echo "Error importing ${dashboard}"
+        exit 1
+    fi
+    echo -e "\tDone"
+done
+echo -e "Default dashboards succesfully imported\n"
