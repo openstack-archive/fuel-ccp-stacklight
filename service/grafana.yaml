@@ -1,0 +1,27 @@
+service:
+  name: grafana
+  ports:
+    - grafana_port
+  containers:
+    - name: grafana
+      image: grafana
+      probes:
+        readiness:  "true"
+        liveness: "true"
+      daemon:
+        command: /usr/sbin/grafana-server --homepath=/usr/share/grafana --config=/etc/grafana/grafana.ini cfg:default.paths.data=/var/lib/grafana cfg:default.paths.logs=/var/log/grafana
+      post:
+        - name: finish-grafana-setup
+          type: single
+          command: /tmp/finish-grafana-setup.sh
+          files:
+            - finish-grafana-setup.sh
+      volumes:
+        - name: grafana-data
+          type: empty-dir
+          path: /var/lib/grafana
+files:
+  finish-grafana-setup.sh:
+    path: /tmp/finish-grafana-setup.sh
+    content: finish-grafana-setup.sh.j2
+    perm: "0755"
