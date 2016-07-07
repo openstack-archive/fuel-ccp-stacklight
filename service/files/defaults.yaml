@@ -5,6 +5,7 @@ configs:
   heka_max_procs: 2
   heka_log_directory_root: "/var/log"
   heka_service_pattern: "^k8s_(.-)%..*"
+  grafana_port: 3000
   influxdb_port: 8086
 versions:
     influxdb_version: "0.13.0"
