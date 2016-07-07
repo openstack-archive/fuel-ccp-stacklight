@@ -1,0 +1,22 @@
+FROM {{ namespace }}/base-tools:{{ tag }}
+MAINTAINER {{ maintainer }}
+
+# NOTE(elemoine): the Grafana package is downloaded from
+# grafanarel.s3.amazonaws.com. Do we want to host the package instead?
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        ca-certificates \
+        curl \
+        libfontconfig \
+    && curl https://grafanarel.s3.amazonaws.com/builds/grafana_3.0.3-1463994644_amd64.deb > /tmp/grafana.deb \
+    && dpkg -i /tmp/grafana.deb \
+    && rm /tmp/grafana.deb \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY dashboards /dashboards
+COPY start.sh /start.sh
+
+EXPOSE 3000
+USER grafana
