@@ -1,0 +1,103 @@
+{
+  "version": 1,
+  "schedule": {
+    "type": "simple",
+    "interval": "10s"
+  },
+  "workflow": {
+    "collect": {
+      "config": {
+          "/intel/procfs": {
+              "proc_path":  "/host-proc"
+          }
+      },
+      "metrics": {
+        "/intel/procfs/cpu/all/idle_percentage": {},
+        "/intel/procfs/cpu/all/iowait_percentage": {},
+        "/intel/procfs/cpu/all/irq_percentage": {},
+        "/intel/procfs/cpu/all/nice_percentage": {},
+        "/intel/procfs/cpu/all/softirq_percentage": {},
+        "/intel/procfs/cpu/all/steal_percentage": {},
+        "/intel/procfs/cpu/all/system_percentage": {},
+        "/intel/procfs/cpu/all/user_percentage": {},
+        "/intel/procfs/filesystem/*/inodes_free": {},
+        "/intel/procfs/filesystem/*/inodes_reserved": {},
+        "/intel/procfs/filesystem/*/inodes_used": {},
+        "/intel/procfs/filesystem/*/space_free": {},
+        "/intel/procfs/filesystem/*/space_reserved": {},
+        "/intel/procfs/filesystem/*/space_used": {},
+        "/intel/procfs/filesystem/*/inodes_percent_free": {},
+        "/intel/procfs/filesystem/*/inodes_percent_reserved": {},
+        "/intel/procfs/filesystem/*/inodes_percent_used": {},
+        "/intel/procfs/filesystem/*/space_percent_free": {},
+        "/intel/procfs/filesystem/*/space_percent_reserved": {},
+        "/intel/procfs/filesystem/*/space_percent_used": {},
+        "/intel/procfs/filesystem/*/device_name": {},
+        "/intel/procfs/filesystem/*/device_type": {},
+        "/intel/procfs/filesystem/*/mount_point": {},
+        "/intel/procfs/disk/*/merged_read": {},
+        "/intel/procfs/disk/*/merged_write": {},
+        "/intel/procfs/disk/*/octets_read": {},
+        "/intel/procfs/disk/*/octets_write": {},
+        "/intel/procfs/disk/*/ops_read": {},
+        "/intel/procfs/disk/*/ops_write": {},
+        "/intel/procfs/disk/*/time_read": {},
+        "/intel/procfs/disk/*/time_write": {},
+        "/intel/procfs/iface/*/bytes_recv": {},
+        "/intel/procfs/iface/*/bytes_sent": {},
+        "/intel/procfs/iface/*/compressed_recv": {},
+        "/intel/procfs/iface/*/compressed_sent": {},
+        "/intel/procfs/iface/*/drop_recv": {},
+        "/intel/procfs/iface/*/drop_sent": {},
+        "/intel/procfs/iface/*/errs_recv": {},
+        "/intel/procfs/iface/*/errs_sent": {},
+        "/intel/procfs/iface/*/fifo_recv": {},
+        "/intel/procfs/iface/*/fifo_sent": {},
+        "/intel/procfs/iface/*/frame_recv": {},
+        "/intel/procfs/iface/*/frame_sent": {},
+        "/intel/procfs/iface/*/multicast_recv": {},
+        "/intel/procfs/iface/*/multicast_sent": {},
+        "/intel/procfs/iface/*/packets_recv": {},
+        "/intel/procfs/iface/*/packets_sent": {},
+        "/intel/procfs/load/min1": {},
+        "/intel/procfs/load/min5": {},
+        "/intel/procfs/load/min15": {},
+        "/intel/procfs/load/min1_rel": {},
+        "/intel/procfs/load/min5_rel": {},
+        "/intel/procfs/load/min15_rel": {},
+        "/intel/procfs/load/runnable_scheduling": {},
+        "/intel/procfs/load/existing_scheduling": {},
+        "/intel/procfs/meminfo/buffers": {},
+        "/intel/procfs/meminfo/cached": {},
+        "/intel/procfs/meminfo/mem_free": {},
+        "/intel/procfs/meminfo/mem_used": {},
+        "/intel/procfs/processes/dead": {},
+        "/intel/procfs/processes/parked": {},
+        "/intel/procfs/processes/running": {},
+        "/intel/procfs/processes/sleeping": {},
+        "/intel/procfs/processes/stopped": {},
+        "/intel/procfs/processes/tracing": {},
+        "/intel/procfs/processes/waiting": {},
+        "/intel/procfs/processes/wakekill": {},
+        "/intel/procfs/processes/waking": {},
+        "/intel/procfs/processes/zombie": {},
+        "/intel/procfs/swap/all/cached_bytes": {},
+        "/intel/procfs/swap/all/free_bytes": {},
+        "/intel/procfs/swap/io/in_pages_per_sec": {},
+        "/intel/procfs/swap/io/out_pages_per_sec": {},
+        "/intel/procfs/swap/all/used_bytes": {}
+      },
+      "process": [{
+        "plugin_name": "passthru",
+        "process": null,
+        "publish": [{
+          "plugin_name": "heka",
+          "config": {
+            "host": "localhost",
+            "port": 5565
+          }
+        }]
+      }]
+    }
+  }
+}
