@@ -1,0 +1,2 @@
+configs:
+  influxdb_port: 8086
