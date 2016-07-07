@@ -1,0 +1,17 @@
+FROM {{ namespace }}/base-tools:{{ tag }}
+MAINTAINER {{ maintainer }}
+
+# NOTE(elemoine) hindsight and lua_sandbox are built from sources (specific
+# commits). In the future we may want to create and host Debian packages.
+
+ADD install.sh /tmp/
+RUN bash /tmp/install.sh \
+    && rm /tmp/install.sh
+
+ADD output/influxdb_tcp.lua /var/lib/hindsight/run/output/
+
+RUN useradd --user-group hindsight \
+    && usermod -a -G microservices hindsight \
+    && chown -R hindsight: /var/lib/hindsight /etc/hindsight
+
+USER hindsight
