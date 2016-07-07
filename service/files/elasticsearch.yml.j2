@@ -1,0 +1,11 @@
+node.name: "{{ network_topology["private"]["address"] }}"
+network.host: [ "127.0.0.1", "{{ network_topology["private"]["address"] }}" ]
+cluster.name: "ELASTIC"
+node.master: true
+node.data: true
+gateway.expected_nodes: 1
+
+path.conf: "/etc/elasticsearch"
+path.data: "/var/lib/elasticsearch/data"
+path.logs: "/var/log/elasticsearch"
+path.scripts: "/etc/elasticsearch/scripts"
