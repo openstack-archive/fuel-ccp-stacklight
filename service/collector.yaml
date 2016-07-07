@@ -1,0 +1,28 @@
+service:
+  name: collector
+  daemonset: true
+  containers:
+    - name: hindsight
+      image: hindsight
+      probes:
+        readiness: "true"
+        liveness: "true"
+      daemon:
+        command: /usr/local/bin/hindsight /etc/hindsight/hindsight.cfg
+      volumes:
+        - name: hindsight-output
+          type: empty-dir
+          path: /var/lib/hindsight/output
+    - name: snap
+      image: snap
+      probes:
+        readiness: "true"
+        liveness: "true"
+      privileged: true
+      daemon:
+        command: snapd --config /etc/snap/snap.conf
+      volumes:
+        - name: proc
+          type: host
+          path: /proc
+          mount-path: /host-proc

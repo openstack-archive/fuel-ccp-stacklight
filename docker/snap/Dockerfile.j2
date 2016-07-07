@@ -1,0 +1,17 @@
+FROM {{ namespace }}/base-tools:{{ tag }}
+MAINTAINER {{ maintainer }}
+
+RUN mkdir -p /etc/snap/auto
+
+# FIXME(elemoine): don't add the config to the Docker image.
+ADD snap.conf /etc/snap/
+ADD task.json /etc/snap/auto/
+
+# install Go and Snap
+ADD install.sh /tmp/
+RUN bash /tmp/install.sh /etc/snap/auto \
+    && rm /tmp/install.sh \
+    && useradd --user-group snap \
+    && usermod -a -G microservices snap
+
+USER snap
