@@ -1,0 +1,28 @@
+FROM {{ namespace }}/base-tools:{{ tag }}
+MAINTAINER {{ maintainer }}
+
+# NOTE(elemoine): the InfluxDB package is downloaded from dl.influxdb.com. Do
+# we want to host the package instead?
+
+RUN gpg \
+        --keyserver hkp://ha.pool.sks-keyservers.net \
+        --recv-keys 05CE15085FC09D18E99EFB22684A14CF2582E0C5 \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+        ca-certificates \
+        wget \
+    && wget -q https://dl.influxdata.com/influxdb/releases/influxdb_0.13.0_amd64.deb.asc \
+    && wget -q https://dl.influxdata.com/influxdb/releases/influxdb_0.13.0_amd64.deb \
+    && gpg --batch --verify influxdb_0.13.0_amd64.deb.asc influxdb_0.13.0_amd64.deb \
+    && dpkg -i influxdb_0.13.0_amd64.deb \
+    && rm -f influxdb_0.13.0_amd64.deb \
+    && apt-get purge -y --auto-remove \
+        ca-certificates wget \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# FIXME(elemoine): don't add the config to the Docker image.
+ADD influxdb.conf /etc/influxdb/
+
+EXPOSE 8086
+USER influxdb

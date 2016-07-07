@@ -1,0 +1,18 @@
+service:
+  name: influxdb
+  node-selector:
+    ccp/influxdb: "true"
+  ports:
+    - influxdb_port
+  containers:
+    - name: influxdb
+      image: influxdb
+      probes:
+        readiness: "true"
+        liveness: "true"
+      daemon:
+        command: influxd -config /etc/influxdb/influxdb.conf
+      volumes:
+        - name: influxdb-data
+          type: empty-dir
+          path: /var/lib/influxdb
