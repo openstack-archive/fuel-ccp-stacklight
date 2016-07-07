@@ -1,0 +1,21 @@
+service:
+  name: elasticsearch
+  node-selector:
+    openstack-controller: "true"
+  ports:
+    - elasticsearch_port
+    - elasticsearch_cluster_port
+  containers:
+    - name: elasticsearch
+      image: elasticsearch
+      probes:
+        readiness: "true"
+        liveness: "true"
+      daemon:
+        command: /usr/share/elasticsearch/bin/elasticsearch
+        files:
+            - elasticsearch.yml
+files:
+  elasticsearch.yml:
+    path: /usr/share/elasticsearch/config/elasticsearch.yml
+    content: elasticsearch.yml.j2
