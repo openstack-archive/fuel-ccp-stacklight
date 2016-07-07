@@ -1,0 +1,25 @@
+service:
+  name: influxdb
+  node-selector:
+    controller: "true"
+  ports:
+    - influxdb_port
+  containers:
+    - name: influxdb
+      image: influxdb
+      probes:
+        readiness: "true"
+        liveness: "true"
+      daemon:
+        command: influxd -config /etc/influxdb/influxdb.conf
+        files:
+          - influxdb.conf
+      volumes:
+        - name: influxdb-data
+          type: empty-dir
+          path: /var/lib/influxdb
+files:
+  influxdb.conf:
+    path: /etc/influxdb/influxdb.conf
+    content: influxdb.conf
+    perm: "0600"
