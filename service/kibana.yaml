@@ -1,0 +1,22 @@
+service:
+  name: kibana
+  node-selector:
+    openstack-controller: "true"
+  ports:
+    - kibana_port
+  containers:
+    - name: kibana
+      image: kibana
+      probes:
+        readiness: "true"
+        liveness: "true"
+      daemon:
+        command: /opt/kibana/bin/kibana
+        dependencies:
+          - elasticsearch
+        files:
+          - kibana.yml
+files:
+  kibana.yml:
+    path: /opt/kibana/config/kibana.yml
+    content: kibana.yml.j2
