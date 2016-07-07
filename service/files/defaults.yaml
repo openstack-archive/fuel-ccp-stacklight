@@ -5,3 +5,4 @@ configs:
   heka_max_procs: 2
   heka_log_directory_root: "/var/log"
   heka_service_pattern: "^k8s_(.-)%..*"
+  influxdb_port: 8086

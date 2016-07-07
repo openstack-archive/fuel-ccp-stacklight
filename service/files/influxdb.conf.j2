@@ -1,0 +1,17 @@
+reporting-disabled = true
+
+[meta]
+  dir = "/var/lib/influxdb/meta"
+
+[data]
+  engine = "tsm1"
+  dir = "/var/lib/influxdb/data"
+  wal-dir = "/var/lib/influxdb/wal"
+
+[admin]
+  enabled = true
+
+[http]
+  auth-enabled = false  # FIXME(elemoine)
+  bind-address = "{{ network_topology["private"]["address"] }}:{{ influxdb_port }}"
+  log-enabled = false
