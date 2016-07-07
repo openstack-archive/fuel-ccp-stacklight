@@ -1,0 +1,4 @@
+influxdb:
+  image: mcp/influxdb
+  ports:
+    - 28086:8086
