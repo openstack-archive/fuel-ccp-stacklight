@@ -1,0 +1,14 @@
+FROM {{ namespace }}/base-tools:{{ tag }}
+MAINTAINER {{ maintainer }}
+
+RUN mkdir -p /etc/snap/auto
+
+# install Go and Snap
+ADD install.sh /tmp/
+RUN bash /tmp/install.sh /etc/snap/auto \
+    && rm /tmp/install.sh \
+    && useradd --user-group snap \
+    && usermod -a -G microservices snap \
+    && chown -R snap: /etc/snap
+
+USER snap
