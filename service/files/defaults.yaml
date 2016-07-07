@@ -4,6 +4,7 @@ configs:
   kibana_port: 5601
   heka_max_procs: 2
   heka_service_pattern: "^k8s_(.-)%..*"
+  hindsight_heka_tcp_port: 5565
   grafana_host: "grafana"
   grafana_port: 3000
   grafana_user: "admin"
@@ -13,6 +14,7 @@ configs:
   influxdb_password: ""
   influxdb_port: 8086
   influxdb_user: ""
+  snap_log_level: 3
 versions:
   influxdb_version: "0.13.0"
   grafana_version: "3.0.3-1463994644"
