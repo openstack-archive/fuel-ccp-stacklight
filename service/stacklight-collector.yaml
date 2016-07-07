@@ -1,0 +1,46 @@
+service:
+  name: stacklight-collector
+  daemonset: true
+  containers:
+    - name: hindsight
+      image: hindsight
+      probes:
+        readiness: "true"
+        liveness: "true"
+      daemon:
+        command: /usr/local/bin/hindsight /etc/hindsight/hindsight.cfg
+        files:
+          - hindsight.cfg
+      volumes:
+        - name: hindsight-output
+          type: empty-dir
+          path: /var/lib/hindsight/output
+    - name: snap
+      image: snap
+      probes:
+        readiness: "true"
+        liveness: "true"
+      privileged: true
+      daemon:
+        command: snapd --config /etc/snap/snap.conf
+        files:
+          - snap.conf
+          - snap-task.json
+      volumes:
+        - name: proc
+          type: host
+          path: /proc
+          mount-path: /host-proc
+files:
+  hindsight.cfg:
+    path: /etc/hindsight/hindsight.cfg
+    content: hindsight.cfg
+    perm: "0600"
+  snap.conf:
+    path: /etc/snap/snap.conf
+    content: snap.conf
+    perm: "0600"
+  snap-task.json:
+    path: /etc/snap/auto/task.json
+    content: snap-task.json
+    perm: "0600"
