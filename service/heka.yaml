@@ -1,8 +1,6 @@
 service:
   name: heka
   daemonset: true
-  node-selector:
-    openstack-compute-controller: "true"
   containers:
     - name: heka
       image: heka

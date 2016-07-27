@@ -1,7 +1,5 @@
 service:
   name: kibana
-  node-selector:
-    openstack-controller: "true"
   ports:
     - kibana_port
   containers:

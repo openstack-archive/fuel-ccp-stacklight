@@ -1,7 +1,5 @@
 service:
   name: influxdb
-  node-selector:
-    openstack-controller: "true"
   ports:
     - influxdb_port
   containers:

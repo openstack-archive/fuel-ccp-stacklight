@@ -1,7 +1,5 @@
 service:
   name: elasticsearch
-  node-selector:
-    openstack-controller: "true"
   ports:
     - elasticsearch_port
     - elasticsearch_cluster_port
