@@ -13,6 +13,6 @@ type = "LogstreamerInput"
 decoder = "rabbitmq_log_decoder"
 splitter = "rabbitmq_log_splitter"
 log_directory = "{{ heka_log_directory_root }}"
-file_match = 'rabbitmq/(?P<Service>rabbit.*)\.log\.?(?P<Seq>\d*)$'
+file_match = 'rabbitmq/(?P<Service>rabbitmq.*)\.log\.?(?P<Seq>\d*)$'
 priority = ["^Seq"]
 differentiator = ["Service"]
