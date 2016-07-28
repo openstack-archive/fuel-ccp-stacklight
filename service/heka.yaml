@@ -13,6 +13,10 @@ service:
         - name: docker-sock
           type: host
           path: /run/docker.sock
+        - name: mysql-logs
+          path: /var/log/ccp/mysql
+          type: host
+          readOnly: True
       daemon:
         command: hekad --config=/etc/heka
         dependencies:
