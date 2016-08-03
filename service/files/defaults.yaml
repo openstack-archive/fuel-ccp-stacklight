@@ -5,6 +5,15 @@ configs:
   heka_max_procs: 2
   heka_log_directory_root: "/var/log"
   heka_service_pattern: "^k8s_(.-)%..*"
+  grafana_host: "grafana"
+  grafana_port: 3000
+  grafana_user: "admin"
+  grafana_password: "admin"
+  influxdb_database: "mcp"
+  influxdb_host: "influxdb"
+  influxdb_password: ""
   influxdb_port: 8086
+  influxdb_user: ""
 versions:
-    influxdb_version: "0.13.0"
+  influxdb_version: "0.13.0"
+  grafana_version: "3.0.3-1463994644"
