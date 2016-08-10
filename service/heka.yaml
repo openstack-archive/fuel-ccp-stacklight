@@ -29,6 +29,8 @@ service:
           - heka-mariadb.toml
           - heka-openstack.toml
           - heka-rabbitmq.toml
+          - heka-ovs-vswitchd.toml
+          - heka-dockerlogs.toml
 files:
   heka-global.toml:
     path: /etc/heka/heka-global.toml
@@ -45,3 +47,9 @@ files:
   heka-rabbitmq.toml:
     path: /etc/heka/heka-rabbitmq.toml
     content: heka-rabbitmq.toml.j2
+  heka-ovs-vswitchd.toml:
+    path: /etc/heka/heka-ovs-vswitchd.toml
+    content: heka-ovs-vswitchd.toml.j2
+  heka-dockerlogs.toml:
+    path: /etc/heka/heka-dockerlogs.toml
+    content: heka-dockerlogs.toml
