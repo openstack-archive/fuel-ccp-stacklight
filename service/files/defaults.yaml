@@ -3,7 +3,6 @@ configs:
   elasticsearch_cluster_port: 9300
   kibana_port: 5601
   heka_max_procs: 2
-  heka_log_directory_root: "/var/log"
   heka_service_pattern: "^k8s_(.-)%..*"
   grafana_host: "grafana"
   grafana_port: 3000

@@ -5,7 +5,7 @@ filename = "lua_decoders/os_mysql_log.lua"
 [mariadb_logstreamer_input]
 type = "LogstreamerInput"
 decoder = "mariadb_log_decoder"
-log_directory = "{{ heka_log_directory_root }}"
-file_match = 'mariadb/mariadb\.log\.?(?P<Seq>\d*)$'
+log_directory = "{{ mariadb_log_base }}"
+file_match = 'mariadb\.log\.?(?P<Seq>\d*)$'
 priority = ["^Seq"]
 differentiator = ['mariadb']
