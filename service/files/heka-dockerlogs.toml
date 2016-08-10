@@ -1,0 +1,10 @@
+[docker-logs-decoder]
+type = "MultiDecoder"
+subs = ['openstack_log_decoder', 'ovs_log_decoder']
+cascade_strategy = "first-wins"
+log_sub_errors = false
+
+[docker_log_input]
+type = "DockerLogInput"
+decoder = "docker-logs-decoder"
+log_decode_failures = false

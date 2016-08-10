@@ -36,6 +36,7 @@ colon = l.P":"
 dash = l.P"-"
 dot = l.P'.'
 quote = l.P'"'
+pipe = l.P'|'
 
 local x4digit = l.xdigit * l.xdigit * l.xdigit * l.xdigit
 local uuid_dash = l.C(x4digit * x4digit * dash * x4digit * dash * x4digit * dash * x4digit * dash * x4digit * x4digit * x4digit)
