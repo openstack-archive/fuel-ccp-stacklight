@@ -14,10 +14,16 @@ service:
           - heka-tcp.cfg
           - prune-input.cfg
           - influxdb-tcp.cfg
+          - kubelet-stats.cfg
       volumes:
         - name: hindsight-output
           type: empty-dir
           path: /var/lib/hindsight/output
+      env:
+        - name: CCP_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
     - name: snap
       image: snap
       probes:
@@ -50,6 +56,10 @@ files:
   influxdb-tcp.cfg:
     path: /var/lib/hindsight/run/output/influxdb_tcp.cfg
     content: hindsight_influxdb_tcp.cfg
+    perm: "0600"
+  kubelet-stats.cfg:
+    path: /var/lib/hindsight/run/input/kubelet_stats.cfg
+    content: hindsight_kubelet_stats.cfg
     perm: "0600"
   snap.conf:
     path: /etc/snap/snap.conf
