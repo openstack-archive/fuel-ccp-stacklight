@@ -18,6 +18,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 1FA22B08 \
           /var/lib/hindsight/run/input/
 
 ADD output/influxdb_tcp.lua /var/lib/hindsight/run/output/
+ADD input/kubelet_stats.lua /var/lib/hindsight/run/input/
 
 RUN useradd --user-group hindsight \
     && usermod -a -G microservices hindsight \
