@@ -9,6 +9,7 @@ RUN bash /tmp/install.sh \
     && rm /tmp/install.sh
 
 ADD output/influxdb_tcp.lua /var/lib/hindsight/run/output/
+ADD input/kubelet_stats.lua /var/lib/hindsight/run/input/
 
 RUN useradd --user-group hindsight \
     && usermod -a -G microservices hindsight \
