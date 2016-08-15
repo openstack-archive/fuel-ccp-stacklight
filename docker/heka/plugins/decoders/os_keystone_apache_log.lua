@@ -47,7 +47,7 @@ function process_message ()
 
     m = apache_grammar:match(log)
     if m then
-        msg.Logger = 'openstack.keystone'
+        msg.Logger = 'openstack.keystone-apache'
         msg.Payload = log
         msg.Timestamp = m.time
 
