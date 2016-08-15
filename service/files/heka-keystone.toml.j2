@@ -1,0 +1,13 @@
+[keystone_apache_log_decoder]
+type = "SandboxDecoder"
+filename = "lua_decoders/os_keystone_apache_log.lua"
+    [keystone_apache_log_decoder.config]
+    apache_log_pattern = '%{X-Forwarded-For}i %l %u %t \"%r\" %>s %b %D \"%{Referer}i\" \"%{User-Agent}i\"'
+
+[keystone_apache_logstreamer_input]
+type = "LogstreamerInput"
+decoder = "keystone_apache_log_decoder"
+log_directory = "{{ keystone_log_base }}"
+file_match = 'keystone-(?P<Service>.+)\.log\.?(?P<Seq>\d*)$'
+priority = ["^Seq"]
+differentiator = ["keystone-", "Service"]

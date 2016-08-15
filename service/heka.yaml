@@ -19,6 +19,14 @@ service:
           path: "{{ rabbitmq_log_base }}"
           type: host
           readOnly: True
+        - name: keystone-logs
+          path: "{{ keystone_log_base }}"
+          type: host
+          readOnly: True
+        - name: horizon-logs
+          path: "{{ horizon_log_base }}"
+          type: host
+          readOnly: True
       daemon:
         command: hekad --config=/etc/heka
         dependencies:
@@ -31,6 +39,8 @@ service:
           - heka-rabbitmq.toml
           - heka-ovs.toml
           - heka-dockerlogs.toml
+          - heka-keystone.toml
+          - heka-horizon.toml
 files:
   heka-global.toml:
     path: /etc/heka/heka-global.toml
@@ -53,3 +63,9 @@ files:
   heka-dockerlogs.toml:
     path: /etc/heka/heka-dockerlogs.toml
     content: heka-dockerlogs.toml
+  heka-keystone.toml:
+    path: /etc/heka/heka-keystone.toml
+    content: heka-keystone.toml.j2
+  heka-horizon.toml:
+    path: /etc/heka/heka-horizon.toml
+    content: heka-horizon.toml.j2
