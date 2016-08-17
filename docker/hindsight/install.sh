@@ -11,20 +11,40 @@ apt-get update
 apt-get install -y --no-install-recommends $BUILD_DEPS
 
 #
-# Build lua_sandbox
+# Build and install lua_sandbox
 #
 
 cd /tmp
-git clone https://github.com/mozilla-services/lua_sandbox.git
+git clone https://github.com/mozilla-services/lua_sandbox
 cd lua_sandbox
-# last tested commit
-# https://github.com/mozilla-services/lua_sandbox/commit/f1ee9eb19f4d237b78b585a8b1c6d056e3b3c9fb
-git checkout f1ee9eb19f4d237b78b585a8b1c6d056e3b3c9fb
+git checkout v1.0.3
 mkdir release
 cd release
 cmake -DCMAKE_BUILD_TYPE=release ..
 make
 make install
+
+#
+# Build and install the necessary lua_sandbox extensions
+#
+cd /tmp
+git clone https://github.com/mozilla-services/lua_sandbox_extensions
+cd lua_sandbox_extensions
+# last tested commit
+# https://github.com/mozilla-services/lua_sandbox_extensions/commit/98065e7627ebf7440363ad73024968b01a1d5c53
+git checkout 98065e7627ebf7440363ad73024968b01a1d5c53
+mkdir release
+cd release
+cmake -DCMAKE_BUILD_TYPE=release -DEXT_cjson=on -DEXT_heka=on -DEXT_lpeg=on -DEXT_socket=on ..
+make
+# make install does not work
+make packages
+tar --strip-components=1 -C / -xvzf luasandbox-cjson-*-Linux.tar.gz
+tar --strip-components=1 -C / -xvzf luasandbox-heka-*-Linux.tar.gz
+tar --strip-components=1 -C / -xvzf luasandbox-lpeg-*-Linux.tar.gz
+tar --strip-components=1 -C / -xvzf luasandbox-socket-*-Linux.tar.gz
+
+ldconfig
 
 #
 # Build Hindsight
@@ -34,8 +54,8 @@ cd /tmp
 git clone https://github.com/trink/hindsight
 cd hindsight
 # last tested commit
-# https://github.com/trink/hindsight/commit/056321863d4e03f843bbac48ace3ed5e88e4b8fc
-git checkout 056321863d4e03f843bbac48ace3ed5e88e4b8fc
+# https://github.com/trink/hindsight/commit/d3b257a3eda7c3874e7cf9ac6f095bbb752a1026
+git checkout d3b257a3eda7c3874e7cf9ac6f095bbb752a1026
 mkdir release
 cd release
 cmake -DCMAKE_BUILD_TYPE=release ..
@@ -57,14 +77,13 @@ mkdir -p \
  /var/lib/hindsight/run/input \
  /var/lib/hindsight/run/output
 
-cp /tmp/lua_sandbox/sandboxes/heka/input/heka_tcp.lua /var/lib/hindsight/run/input/
-cp /tmp/lua_sandbox/sandboxes/heka/input/syslog_udp.lua /var/lib/hindsight/run/input/
+cp /tmp/lua_sandbox_extensions/release/install/share/luasandbox/sandboxes/heka/input/heka_tcp.lua /var/lib/hindsight/run/input/
 cp /tmp/hindsight/sandboxes/input/prune_input.lua /var/lib/hindsight/run/input/
 
 #
 # Remove build directories
 #
-rm -rf /tmp/lua_sandbox /tmp/hindsight
+rm -rf /tmp/lua_sandbox /tmp/lua_sandbox_extensions /tmp/hindsight
 apt-get purge -y --auto-remove $BUILD_DEPS
 apt-get clean
 rm -rf /var/lib/apt/lists/*
