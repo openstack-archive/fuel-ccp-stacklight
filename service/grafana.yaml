@@ -11,17 +11,17 @@ service:
       daemon:
         command: /usr/sbin/grafana-server --homepath=/usr/share/grafana --config=/etc/grafana/grafana.ini cfg:default.paths.data=/var/lib/grafana cfg:default.paths.logs=/var/log/grafana
       post:
-        - name: finish-grafana-setup
+        - name: grafana-configure
           type: single
-          command: /opt/ccp/bin/finish-grafana-setup.sh
+          command: /opt/ccp/bin/grafana-configure.sh
           files:
-            - finish-grafana-setup.sh
+            - grafana-configure.sh
       volumes:
         - name: grafana-data
           type: empty-dir
           path: /var/lib/grafana
 files:
-  finish-grafana-setup.sh:
-    path: /opt/ccp/bin/finish-grafana-setup.sh
-    content: finish-grafana-setup.sh.j2
+  grafana-configure.sh:
+    path: /opt/ccp/bin/grafana-configure.sh
+    content: grafana-configure.sh.j2
     perm: "0755"
