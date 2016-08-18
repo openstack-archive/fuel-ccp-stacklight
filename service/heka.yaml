@@ -12,11 +12,11 @@ service:
           type: host
           path: /run/docker.sock
         - name: mysql-logs
-          path: "{{ mariadb_log_base }}"
+          path: "/var/log/ccp/mysql"
           type: host
           readOnly: True
         - name: rabbitmq-logs
-          path: "{{ rabbitmq_log_base }}"
+          path: "/var/log/ccp/rabbitmq"
           type: host
           readOnly: True
         - name: keystone-logs
