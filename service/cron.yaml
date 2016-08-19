@@ -1,0 +1,38 @@
+service:
+  name: cron
+  daemonset: true
+  containers:
+    - name: cron
+      image: cron
+      probes:
+        readiness: "true"
+        liveness: "true"
+      volumes:
+        - name: mysql-logs
+          path: "/var/log/ccp/mysql"
+          type: host
+          readOnly: False
+        - name: rabbitmq-logs
+          path: "/var/log/ccp/rabbitmq"
+          type: host
+          readOnly: False
+        - name: keystone-logs
+          path: "/var/log/ccp/keystone"
+          type: host
+          readOnly: False
+        - name: horizon-logs
+          path: "/var/log/ccp/horizon"
+          type: host
+          readOnly: False
+      daemon:
+        command: cron -f
+        files:
+          - logrotate.conf
+          - logrotate-services.conf
+files:
+  logrotate.conf:
+    path: /etc/logrotate.conf
+    content: cron-logrotate-global.conf.j2
+  logrotate-services.conf:
+    path: /etc/logrotate.d/logrotate-services.conf
+    content: cron-logrotate-services.conf.j2

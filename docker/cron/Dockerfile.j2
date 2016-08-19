@@ -1,0 +1,8 @@
+FROM {{ namespace }}/base-tools:{{ tag }}
+MAINTAINER {{ maintainer }}
+
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get -y install --no-install-recommends \
+        cron \
+        logrotate \
+    && apt-get clean

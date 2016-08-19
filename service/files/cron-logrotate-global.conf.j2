@@ -1,0 +1,12 @@
+{{ cron_rotate_interval }}
+rotate {{ cron_rotate_days }}
+copytruncate
+compress
+delaycompress
+notifempty
+missingok
+
+minsize {{ cron_rotate_minsize }}
+maxsize {{ cron_rotate_maxsize }}
+
+include /etc/logrotate.d
