@@ -1,0 +1,15 @@
+{{ cron_rotate_interval }}
+rotate {{ cron_rotate_days }}
+copytruncate
+compress
+delaycompress
+notifempty
+missingok
+
+minsize {{ cron_rotate_minsize }}
+maxsize {{ cron_rotate_maxsize }}
+
+# I dont think this makes any sense.
+#su root microservices
+
+include /etc/logrotate.d

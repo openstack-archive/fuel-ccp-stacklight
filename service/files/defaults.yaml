@@ -15,6 +15,10 @@ configs:
   influxdb_port: 8086
   influxdb_user: ""
   snap_log_level: 3
+  cron_rotate_interval: "daily"
+  cron_rotate_days: 6
+  cron_rotate_minsize: "1M"
+  cron_rotate_maxsize: "100M"
 versions:
   influxdb_version: "0.13.0"
   grafana_version: "3.0.3-1463994644"

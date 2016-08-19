@@ -1,0 +1,14 @@
+{% set services = [
+    'mysql',
+    'rabbitmq',
+    'keystone',
+    'horizon',
+                  ]
+%}
+
+{% for service in services %}
+"/var/log/ccp/{{ service }}/*.log"
+{
+
+}
+{% endfor %}
