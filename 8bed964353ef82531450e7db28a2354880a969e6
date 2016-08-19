@@ -1,0 +1,9 @@
+Code-Review+2: Artur Zarzycki <azarzycki@mirantis.com>
+Code-Review+2: Eric Lemoine <elemoine@mirantis.com>
+Workflow+1: Eric Lemoine <elemoine@mirantis.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Fri, 19 Aug 2016 18:07:55 +0000
+Reviewed-on: https://review.openstack.org/357873
+Project: openstack/fuel-ccp-stacklight
+Branch: refs/heads/master
