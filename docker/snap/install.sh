@@ -89,8 +89,8 @@ make deps
 
 # Build Snap
 
-# https://github.com/intelsdi-x/snap/commit/5137f6cb389b3502b8d79d05aac2d5a6ecec1b41
-REFSPEC="5137f6cb389b3502b8d79d05aac2d5a6ecec1b41"
+# https://github.com/intelsdi-x/snap/commit/4e6b19df7b7b7d4300429ba22b766c2ac70d2e29
+REFSPEC="4e6b19df7b7b7d4300429ba22b766c2ac70d2e29"
 cd $GOPATH/src/github.com/intelsdi-x/snap
 git checkout ${REFSPEC}
 make deps all install
