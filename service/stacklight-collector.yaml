@@ -41,7 +41,7 @@ files:
     perm: "0600"
   heka-tcp.cfg:
     path: /var/lib/hindsight/run/input/heka_tcp.cfg
-    content: hindsight_heka_tcp.cfg
+    content: hindsight_heka_tcp.cfg.j2
     perm: "0600"
   prune-input.cfg:
     path: /var/lib/hindsight/run/input/prune_input.cfg
@@ -49,13 +49,13 @@ files:
     perm: "0600"
   influxdb-tcp.cfg:
     path: /var/lib/hindsight/run/output/influxdb_tcp.cfg
-    content: hindsight_influxdb_tcp.cfg
+    content: hindsight_influxdb_tcp.cfg.j2
     perm: "0600"
   snap.conf:
     path: /etc/snap/snap.conf
-    content: snap.conf
+    content: snap.conf.j2
     perm: "0600"
   snap-task.json:
     path: /etc/snap/auto/task.json
-    content: snap-task.json
+    content: snap-task.json.j2
     perm: "0600"
