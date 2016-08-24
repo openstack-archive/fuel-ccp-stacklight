@@ -105,10 +105,7 @@ end
 -- if the message is invalid
 local function create_line()
 
-    -- FIXME(elemoine) get hostname from Field[Hostname]
-    local tags = {
-        hostname = escape_string(read_message('Hostname'))
-    }
+    local tags = {}
     local dimensions, dimensions_index = read_field('dimensions')
     if dimensions then
         local i = 0
