@@ -1,4 +1,11 @@
 log_level: {{ snap_log_level }}
 control:
+  plugin_load_timeout: 15
   plugin_trust_level: 0
   auto_discover_path: /etc/snap/auto
+  plugins:
+    collector:
+      smart-disk:
+        all:
+          proc_path: /host-proc
+          dev_path: /host-dev

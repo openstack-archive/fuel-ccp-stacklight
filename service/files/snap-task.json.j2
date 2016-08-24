@@ -10,6 +10,10 @@
       "config": {
           "/intel/procfs": {
               "proc_path":  "/host-proc"
+          },
+          "/intel/disk": {
+              "proc_path":  "/host-proc",
+              "dev_path":  "/host-dev"
           }
       },
       "tags": {
@@ -18,6 +22,7 @@
           }
       },
       "metrics": {
+        "/intel/disk/smart/*": {},
         "/intel/procfs/cpu/*/idle_percentage": {},
         "/intel/procfs/cpu/*/iowait_percentage": {},
         "/intel/procfs/cpu/*/irq_percentage": {},
