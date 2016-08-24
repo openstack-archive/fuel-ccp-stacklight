@@ -68,7 +68,7 @@ for f in glob.glob(path):
     for k, v in dashboard.items():
         if k == 'annotations':
             for anno in v.get('list', []):
-                anno['datasource'] = 'MCP InfluxDB'
+                anno['datasource'] = 'CCP InfluxDB'
         if k == 'templating':
             variables = v.get('list', [])
             for o in variables:

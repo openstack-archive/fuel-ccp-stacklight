@@ -10,7 +10,7 @@ echo -e "Grafana is up and running.\n"
 echo "Creating InfluxDB datasource..."
 curl -i -XPOST -H "Accept: application/json" -H "Content-Type: application/json" "http://{{ grafana_user }}:{{ grafana_password }}@{{ grafana_host }}:{{ grafana_port }}/api/datasources" -d '
 {
-    "name": "MCP InfluxDB",
+    "name": "CCP InfluxDB",
     "type": "influxdb",
     "access": "proxy",
     "isDefault": true,
