@@ -87,6 +87,13 @@ cd $GOPATH/src/github.com/intelsdi-x/snap-plugin-collector-swap
 git checkout ${REFSPEC}
 make deps
 
+# https://github.com/intelsdi-x/snap-plugin-collector-smart/commit/5f06ea6af9da44cd46cf675a984d1a94f608249f
+REFSPEC="5f06ea6af9da44cd46cf675a984d1a94f608249f"
+go get -d github.com/intelsdi-x/snap-plugin-collector-smart
+cd $GOPATH/src/github.com/intelsdi-x/snap-plugin-collector-smart
+git checkout ${GIT_OPTS} ${REFSPEC}
+make deps
+
 # https://github.com/intelsdi-x/snap-plugin-publisher-heka/commit/e95f8cc48edf29fc8fd8ab2fa3f0c6f6ab054674
 REFSPEC="e95f8cc48edf29fc8fd8ab2fa3f0c6f6ab054674"
 go get -d github.com/intelsdi-x/snap-plugin-publisher-heka
@@ -150,6 +157,14 @@ cd $GOPATH/src/github.com/intelsdi-x/snap-plugin-collector-swap
 make all
 cp build/rootfs/snap-plugin-collector-swap /usr/local/bin
 ln -s /usr/local/bin/snap-plugin-collector-swap $AUTO_DISCOVERY_PATH
+
+cd $GOPATH/src/github.com/intelsdi-x/snap-plugin-collector-smart
+make all
+cp build/rootfs/snap-plugin-collector-smart /usr/local/bin
+ln -s /usr/local/bin/snap-plugin-collector-smart $AUTO_DISCOVERY_PATH
+# the SMART plugin accesses files like /dev/sdX which root
+# root user only can read
+chmod u+s /usr/local/bin/snap-plugin-collector-smart
 
 cd $GOPATH/src/github.com/intelsdi-x/snap-plugin-publisher-heka
 make all
