@@ -34,6 +34,10 @@ service:
           type: host
           path: /proc
           mount-path: /host-proc
+        - name: dev
+          type: host
+          path: /dev
+          mount-path: /host-dev
 files:
   hindsight.cfg:
     path: /etc/hindsight/hindsight.cfg
