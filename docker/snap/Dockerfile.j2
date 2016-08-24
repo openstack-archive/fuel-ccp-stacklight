@@ -1,11 +1,10 @@
 FROM {{ namespace }}/base-tools:{{ tag }}
 MAINTAINER {{ maintainer }}
 
-RUN mkdir -p /etc/snap/auto
-
 # install Go and Snap
 ADD install.sh /tmp/
 RUN apt-get -y -t jessie-backports --no-install-recommends install golang \
+    && mkdir -p /etc/snap/auto \
     && bash /tmp/install.sh /etc/snap/auto \
     && rm /tmp/install.sh \
     && useradd --user-group snap \
