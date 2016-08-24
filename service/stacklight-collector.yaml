@@ -40,10 +40,15 @@ service:
           type: host
           path: /proc
           mount-path: /host-proc
+      env:
+        - name: CCP_SNAP_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
 files:
   hindsight.cfg:
     path: /etc/hindsight/hindsight.cfg
-    content: hindsight.cfg
+    content: hindsight.cfg.j2
     perm: "0600"
   heka-tcp.cfg:
     path: /var/lib/hindsight/run/input/heka_tcp.cfg
