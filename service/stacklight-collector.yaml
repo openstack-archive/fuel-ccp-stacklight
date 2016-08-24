@@ -43,7 +43,7 @@ service:
 files:
   hindsight.cfg:
     path: /etc/hindsight/hindsight.cfg
-    content: hindsight.cfg
+    content: hindsight.cfg.j2
     perm: "0600"
   heka-tcp.cfg:
     path: /var/lib/hindsight/run/input/heka_tcp.cfg
