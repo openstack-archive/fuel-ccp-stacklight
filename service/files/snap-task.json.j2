@@ -12,6 +12,11 @@
               "proc_path":  "/host-proc"
           }
       },
+      "tags": {
+          "/intel/procfs": {
+              "hostname": "{{ CCP_SNAP_NODE_NAME }}"
+          }
+      },
       "metrics": {
         "/intel/procfs/cpu/all/idle_percentage": {},
         "/intel/procfs/cpu/all/iowait_percentage": {},
