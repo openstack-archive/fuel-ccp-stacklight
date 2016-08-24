@@ -87,6 +87,14 @@ cd $GOPATH/src/github.com/intelsdi-x/snap-plugin-collector-swap
 git checkout ${REFSPEC}
 make deps
 
+# https://github.com/intelsdi-x/snap-plugin-collector-smart/commit/NON-OFFICIAL-YET
+REFSPEC="dynamic_non_empty_metrics"
+go get -d github.com/intelsdi-x/snap-plugin-collector-smart
+cd $GOPATH/src/github.com/intelsdi-x/snap-plugin-collector-smart
+git fetch https://github.com/obourdon/snap-plugin-collector-smart ${REFSPEC}
+git checkout ${GIT_OPTS} FETCH_HEAD
+make deps
+
 # Build Snap
 
 # https://github.com/intelsdi-x/snap/commit/4e6b19df7b7b7d4300429ba22b766c2ac70d2e29
@@ -143,6 +151,14 @@ cd $GOPATH/src/github.com/intelsdi-x/snap-plugin-collector-swap
 make all
 cp build/rootfs/snap-plugin-collector-swap /usr/local/bin
 ln -s /usr/local/bin/snap-plugin-collector-swap $AUTO_DISCOVERY_PATH
+
+cd $GOPATH/src/github.com/intelsdi-x/snap-plugin-collector-smart
+make all
+cp build/rootfs/snap-plugin-collector-smart /usr/local/bin
+ln -s /usr/local/bin/snap-plugin-collector-smart $AUTO_DISCOVERY_PATH
+# the SMART plugin accesses files like /dev/sdX which root
+# root user only can read
+chmod u+s /usr/local/bin/snap-plugin-collector-smart
 
 # Get Heka and build the minimun required for the Heka publisher plugin
 # https://github.com/mozilla-services/heka/commit/e8799385d16915a80b69061d05542da6342e58e4
