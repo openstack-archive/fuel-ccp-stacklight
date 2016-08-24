@@ -1,4 +1,16 @@
 log_level: {{ snap_log_level }}
 control:
+  listen_addr: 0.0.0.0
+  listen_port: {{ snap_control_tcp_port }}
   plugin_trust_level: 0
   auto_discover_path: /etc/snap/auto
+  plugins:
+    collector:
+      smart-disk:
+        all:
+          proc_path: /host-proc
+          dev_path: /host-dev
+restapi:
+  enable: true
+  port: {{ snap_rest_tcp_port }}
+  addr: 0.0.0.0

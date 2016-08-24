@@ -1,5 +1,8 @@
 service:
   name: stacklight-collector
+  ports:
+    - snap_control_tcp_port
+    - snap_rest_tcp_port
   daemonset: true
   containers:
     - name: hindsight
@@ -34,6 +37,10 @@ service:
           type: host
           path: /proc
           mount-path: /host-proc
+        - name: dev
+          type: host
+          path: /dev
+          mount-path: /host-dev
 files:
   hindsight.cfg:
     path: /etc/hindsight/hindsight.cfg

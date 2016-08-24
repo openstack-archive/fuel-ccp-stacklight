@@ -73,11 +73,12 @@ cd $GOPATH/src/github.com/intelsdi-x/snap-plugin-collector-meminfo
 git checkout ${REFSPEC}
 make deps
 
-# https://github.com/intelsdi-x/snap-plugin-collector-processes/commit/6a40b01a1fe0953c1c7cfa85d919e89745673f21
-REFSPEC="6a40b01a1fe0953c1c7cfa85d919e89745673f21"
+# https://github.com/intelsdi-x/snap-plugin-collector-processes/commit/NON-OFFICIAL-YET
+REFSPEC="fix_4_issue19"
 go get -d github.com/intelsdi-x/snap-plugin-collector-processes
 cd $GOPATH/src/github.com/intelsdi-x/snap-plugin-collector-processes
-git checkout ${REFSPEC}
+git fetch https://github.com/obourdon/snap-plugin-collector-processes ${REFSPEC}
+git checkout FETCH_HEAD
 make deps
 
 # https://github.com/intelsdi-x/snap-plugin-collector-swap/commit/4afdd8658cef1bb5744b38c9a77aa4589afd5f8d
@@ -85,6 +86,14 @@ REFSPEC="4afdd8658cef1bb5744b38c9a77aa4589afd5f8d"
 go get -d github.com/intelsdi-x/snap-plugin-collector-swap
 cd $GOPATH/src/github.com/intelsdi-x/snap-plugin-collector-swap
 git checkout ${REFSPEC}
+make deps
+
+# https://github.com/intelsdi-x/snap-plugin-collector-smart/commit/NON-OFFICIAL-YET
+REFSPEC="dynamic_non_empty_metrics"
+go get -d github.com/intelsdi-x/snap-plugin-collector-smart
+cd $GOPATH/src/github.com/intelsdi-x/snap-plugin-collector-smart
+git fetch https://github.com/obourdon/snap-plugin-collector-smart ${REFSPEC}
+git checkout FETCH_HEAD
 make deps
 
 # Build Snap
@@ -143,6 +152,14 @@ cd $GOPATH/src/github.com/intelsdi-x/snap-plugin-collector-swap
 make all
 cp build/rootfs/snap-plugin-collector-swap /usr/local/bin
 ln -s /usr/local/bin/snap-plugin-collector-swap $AUTO_DISCOVERY_PATH
+
+cd $GOPATH/src/github.com/intelsdi-x/snap-plugin-collector-smart
+make all
+cp build/rootfs/snap-plugin-collector-smart /usr/local/bin
+ln -s /usr/local/bin/snap-plugin-collector-smart $AUTO_DISCOVERY_PATH
+# the SMART plugin accesses files like /dev/sdX which root
+# root user only can read
+chmod u+s /usr/local/bin/snap-plugin-collector-smart
 
 # Get Heka and build the minimun required for the Heka publisher plugin
 # https://github.com/mozilla-services/heka/commit/e8799385d16915a80b69061d05542da6342e58e4
