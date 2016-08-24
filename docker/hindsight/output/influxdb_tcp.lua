@@ -105,10 +105,7 @@ end
 -- if the message is invalid
 local function create_line()
 
-    -- FIXME(elemoine) get hostname from Field[Hostname]
-    local tags = {
-        hostname = escape_string(read_message('Hostname'))
-    }
+    local tags = {}
     local dimensions, dimensions_index = read_field('dimensions')
     if dimensions then
         local i = 0
@@ -153,6 +150,12 @@ local function create_line()
     end
     if tags['value'] ~= nil and value_index == 0 then
         return nil, 'index of field "value" should not be 0'
+    end
+
+    -- if the message doesn't have a "hostname" field then we use what
+    -- we have in the "Hostname" property of the message
+    if tags['hostname'] == nil then
+        tags['hostname'] = escape_string(read_message('Hostname'))
     end
 
     local tags_array = {}
