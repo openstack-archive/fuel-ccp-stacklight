@@ -8,16 +8,20 @@
   "workflow": {
     "collect": {
       "config": {
-          "/intel/procfs": {
+          "/intel": {
               "proc_path":  "/host-proc"
+          },
+          "/intel/disk": {
+              "dev_path":  "/host-dev"
           }
       },
       "tags": {
-          "/intel/procfs": {
+          "/intel": {
               "hostname": "{{ CCP_SNAP_NODE_NAME }}"
           }
       },
       "metrics": {
+        "/intel/disk/smart/*": {},
         "/intel/procfs/cpu/*/idle_percentage": {},
         "/intel/procfs/cpu/*/iowait_percentage": {},
         "/intel/procfs/cpu/*/irq_percentage": {},
