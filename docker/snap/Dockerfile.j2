@@ -1,7 +1,7 @@
 FROM {{ namespace }}/base-tools:{{ tag }}
 MAINTAINER {{ maintainer }}
 
-# install Go and Snap
+# Install Snap
 ADD install.sh /tmp/
 RUN mkdir -p /etc/snap/auto \
     && bash /tmp/install.sh /etc/snap/auto \
