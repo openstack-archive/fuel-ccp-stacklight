@@ -192,6 +192,10 @@ function process_message()
         if not ok then
             buffer[buffer_len] = nil
             buffer_len = buffer_len - 1
+            -- recreate database on retry
+            if string.match(err_msg, 'database not found') then
+                database_created = false
+            end
             return -3, err_msg  -- retry
         end
         return 0
