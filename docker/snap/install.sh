@@ -75,12 +75,11 @@ cd $GOPATH/src/github.com/intelsdi-x/snap-plugin-collector-meminfo
 git checkout ${GIT_OPTS} ${REFSPEC}
 make deps
 
-# https://github.com/intelsdi-x/snap-plugin-collector-processes/commit/NON-OFFICIAL-YET
-REFSPEC="fix_4_issue19"
+# https://github.com/intelsdi-x/snap-plugin-collector-processes/commit/c07278cdbe8126ea5a32db7442796cde575070a0
+REFSPEC="c07278cdbe8126ea5a32db7442796cde575070a0"
 go get -d github.com/intelsdi-x/snap-plugin-collector-processes
 cd $GOPATH/src/github.com/intelsdi-x/snap-plugin-collector-processes
-git fetch https://github.com/obourdon/snap-plugin-collector-processes ${REFSPEC}
-git checkout ${GIT_OPTS} FETCH_HEAD
+git checkout ${GIT_OPTS} ${REFSPEC}
 make deps
 
 # https://github.com/intelsdi-x/snap-plugin-collector-swap/commit/4afdd8658cef1bb5744b38c9a77aa4589afd5f8d
