@@ -1,0 +1,9 @@
+Code-Review+1: Andrey Pavlov <apavlov@mirantis.com>
+Code-Review+2: Eric Lemoine <elemoine@mirantis.com>
+Workflow+1: Eric Lemoine <elemoine@mirantis.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Mon, 29 Aug 2016 13:18:12 +0000
+Reviewed-on: https://review.openstack.org/361231
+Project: openstack/fuel-ccp-stacklight
+Branch: refs/heads/master
