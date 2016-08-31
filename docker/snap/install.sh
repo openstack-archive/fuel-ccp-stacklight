@@ -87,6 +87,13 @@ cd $GOPATH/src/github.com/intelsdi-x/snap-plugin-collector-swap
 git checkout ${REFSPEC}
 make deps
 
+# https://github.com/intelsdi-x/snap-plugin-publisher-heka/commit/e95f8cc48edf29fc8fd8ab2fa3f0c6f6ab054674
+REFSPEC="e95f8cc48edf29fc8fd8ab2fa3f0c6f6ab054674"
+go get -d github.com/intelsdi-x/snap-plugin-publisher-heka
+cd $GOPATH/src/github.com/intelsdi-x/snap-plugin-publisher-heka
+git checkout ${REFSPEC}
+make deps
+
 # Build Snap
 
 # https://github.com/intelsdi-x/snap/commit/4e6b19df7b7b7d4300429ba22b766c2ac70d2e29
@@ -144,31 +151,10 @@ make all
 cp build/rootfs/snap-plugin-collector-swap /usr/local/bin
 ln -s /usr/local/bin/snap-plugin-collector-swap $AUTO_DISCOVERY_PATH
 
-# Get Heka and build the minimun required for the Heka publisher plugin
-# https://github.com/mozilla-services/heka/commit/e8799385d16915a80b69061d05542da6342e58e4
-REFSPEC="e8799385d16915a80b69061d05542da6342e58e4"
-cd /tmp
-git clone -b dev --single-branch https://github.com/mozilla-services/heka
-cd heka
-git checkout ${REFSPEC}
-source env.sh  # changes GOPATH to /tmp/heka/build/heka
-mkdir -p build
-cd build
-cmake ..
-make message_matcher_parser
-
-# Get and build Heka plugin
-# https://github.com/intelsdi-x/snap-plugin-publisher-heka/commit/e95f8cc48edf29fc8fd8ab2fa3f0c6f6ab054674
-REFSPEC="e95f8cc48edf29fc8fd8ab2fa3f0c6f6ab054674"
-go get -d github.com/intelsdi-x/snap-plugin-publisher-heka
-cd $GOPATH/src/github.com/intelsdi-x/snap
-make deps
 cd $GOPATH/src/github.com/intelsdi-x/snap-plugin-publisher-heka
-git checkout ${REFSPEC}
-make deps all
+make all
 cp build/rootfs/snap-plugin-publisher-heka /usr/local/bin
 ln -s /usr/local/bin/snap-plugin-publisher-heka $AUTO_DISCOVERY_PATH
-rm -rf /tmp/heka
 
 #
 # Clean up
