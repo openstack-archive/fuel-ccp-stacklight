@@ -8,7 +8,7 @@ service:
         readiness: "true"
         liveness: "true"
       daemon:
-        command: /usr/local/bin/hindsight /etc/hindsight/hindsight.cfg
+        command: /usr/bin/hindsight /etc/hindsight/hindsight.cfg
         files:
           - hindsight.cfg
           - heka-tcp.cfg
