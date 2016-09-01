@@ -1,15 +1,30 @@
 FROM {{ namespace }}/base-tools:{{ tag }}
 MAINTAINER {{ maintainer }}
 
-# NOTE(elemoine) hindsight and lua_sandbox are built from sources (specific
-# commits). In the future we may want to create and host Debian packages.
+# We use Mirantis packages for hindsight, lua_sandbox and lua_sandbox_extensions
 
-ADD install.sh /tmp/
-RUN bash /tmp/install.sh \
-    && rm /tmp/install.sh
+ENV DEBIAN_FRONTEND noninteractive
+
+COPY sources.mos.list /etc/apt/sources.list.d/
+COPY mos.pref /etc/apt/preferences.d/
+
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 1FA22B08 \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+       hindsight \
+       lua-sandbox-extensions \
+    && mkdir -p /etc/hindsight \
+                /var/lib/hindsight/output \
+                /var/lib/hindsight/load/analysis \
+                /var/lib/hindsight/load/input \
+                /var/lib/hindsight/load/output \
+                /var/lib/hindsight/run/analysis \
+                /var/lib/hindsight/run/input \
+                /var/lib/hindsight/run/output \
+    && cp /usr/share/luasandbox/sandboxes/heka/input/prune_input.lua /var/lib/hindsight/run/input/
 
 ADD output/influxdb_tcp.lua /var/lib/hindsight/run/output/
-ADD input/kubelet_stats.lua /var/lib/hindsight/run/input/
+ADD input/kubelet_stats.lua input/heka_tcp.lua /var/lib/hindsight/run/input/
 
 RUN useradd --user-group hindsight \
     && usermod -a -G microservices hindsight \
