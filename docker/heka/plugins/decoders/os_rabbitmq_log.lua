@@ -24,7 +24,10 @@ local msg = {
     Hostname    = nil,
     Payload     = nil,
     Pid         = nil,
-    Fields      = nil,
+    Fields      = {
+        programname = 'rabbitmq',
+        severity_label = nil,
+    },
     Severity    = nil,
 }
 
@@ -64,9 +67,7 @@ function process_message ()
         msg.Severity = 5 -- NOTICE
     end
 
-    msg.Fields = {}
     msg.Fields.severity_label = utils.severity_to_label_map[msg.Severity]
-    msg.Fields.programname = 'rabbitmq'
 
     return utils.safe_inject_message(msg)
 end
