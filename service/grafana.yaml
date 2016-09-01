@@ -10,12 +10,12 @@ service:
         liveness: "true"
       daemon:
         command: /usr/sbin/grafana-server --homepath=/usr/share/grafana --config=/etc/grafana/grafana.ini cfg:default.paths.data=/var/lib/grafana cfg:default.paths.logs=/var/log/grafana
+        files:
+          - grafana-configure.sh
       post:
         - name: grafana-configure
-          type: single
+          type: local
           command: /opt/ccp/bin/grafana-configure.sh
-          files:
-            - grafana-configure.sh
       volumes:
         - name: grafana-data
           type: empty-dir
