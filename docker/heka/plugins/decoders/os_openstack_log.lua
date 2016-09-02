@@ -19,6 +19,9 @@ l.locale(l)
 local patt = require 'os_patterns'
 local utils = require 'os_utils'
 
+local service_pattern = read_config("heka_service_pattern") or
+    error('heka_service_pattern must be specified')
+
 local msg = {
     Timestamp   = nil,
     Type        = 'log',
@@ -57,10 +60,8 @@ end
 
 function process_message ()
 
-    local pattern = read_config("heka_service_pattern")
-
     local cont_name = read_message("Fields[ContainerName]")
-    local program = string.match(cont_name, pattern)
+    local program = string.match(cont_name, service_pattern)
     local service = nil
 
     if program == nil then
