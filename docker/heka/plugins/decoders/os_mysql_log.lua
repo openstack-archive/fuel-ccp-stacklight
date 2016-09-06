@@ -24,7 +24,10 @@ local msg = {
     Hostname    = nil,
     Payload     = nil,
     Pid         = nil,
-    Fields      = {},
+    Fields      = {
+        programname = 'mysql',
+        severity_label = nil,
+    },
     Severity    = nil,
 }
 
