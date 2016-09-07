@@ -69,7 +69,7 @@
                     "type": "fill"
                   }
                 ],
-                "measurement": "intel.procfs.cpu.all.user_percentage",
+                "measurement": "intel.procfs.cpu.user_percentage",
                 "policy": "default",
                 "refId": "A",
                 "resultFormat": "time_series",
@@ -92,6 +92,12 @@
                     "key": "hostname",
                     "operator": "=~",
                     "value": "/^$hostname$/"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "cpuID",
+                    "operator": "=",
+                    "value": "all"
                   }
                 ]
               },
@@ -112,7 +118,7 @@
                     "type": "fill"
                   }
                 ],
-                "measurement": "intel.procfs.cpu.all.system_percentage",
+                "measurement": "intel.procfs.cpu.system_percentage",
                 "policy": "default",
                 "refId": "B",
                 "resultFormat": "time_series",
@@ -135,6 +141,12 @@
                     "key": "hostname",
                     "operator": "=~",
                     "value": "/^$hostname$/"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "cpuID",
+                    "operator": "=",
+                    "value": "all"
                   }
                 ]
               },
@@ -155,7 +167,7 @@
                     "type": "fill"
                   }
                 ],
-                "measurement": "intel.procfs.cpu.all.idle_percentage",
+                "measurement": "intel.procfs.cpu.idle_percentage",
                 "policy": "default",
                 "refId": "C",
                 "resultFormat": "time_series",
@@ -178,6 +190,12 @@
                     "key": "hostname",
                     "operator": "=~",
                     "value": "/^$hostname$/"
+                  },
+                  {
+                    "condition": "AND",
+                    "key": "cpuID",
+                    "operator": "=",
+                    "value": "all"
                   }
                 ]
               }
@@ -3062,7 +3080,7 @@
           "multi": false,
           "name": "hostname",
           "options": [],
-          "query": "show tag values from \"intel.procfs.cpu.all.user_percentage\" with key = hostname",
+          "query": "show tag values from \"intel.procfs.cpu.user_percentage\" with key = hostname",
           "refresh": 1,
           "type": "query"
         },
@@ -3139,6 +3157,6 @@
     },
     "timezone": "browser",
     "title": "System",
-    "version": 4
+    "version": 5
   }
 }
