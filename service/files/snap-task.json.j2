@@ -92,16 +92,12 @@
         "/intel/procfs/swap/io/out_pages_per_sec": {},
         "/intel/procfs/swap/all/used_bytes": {}
       },
-      "process": [{
-        "plugin_name": "passthru",
-        "process": null,
-        "publish": [{
-          "plugin_name": "heka",
-          "config": {
-            "host": "localhost",
-            "port": {{ hindsight_heka_tcp_port }}
-          }
-        }]
+      "publish": [{
+        "plugin_name": "heka",
+        "config": {
+          "host": "localhost",
+          "port": {{ hindsight_heka_tcp_port }}
+        }
       }]
     }
   }
