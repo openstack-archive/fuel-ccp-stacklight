@@ -19,6 +19,10 @@ echo "Get and build Heka..."
 cd /tmp
 git clone -b dev --single-branch https://github.com/mozilla-services/heka
 cd heka
+touch message/message.pb.go  # make sure message/message.pb.go has a date
+                             # more recent than message/message.proto, to
+                             # prevent make from attempting to re-generate
+                             # message.pb.go
 source build.sh  # changes GOPATH to /tmp/heka/build/heka and builds Heka
 install -vD /tmp/heka/build/heka/bin/* /usr/local/bin/
 cp -rp /tmp/heka/build/heka/lib/lib* /usr/lib/
