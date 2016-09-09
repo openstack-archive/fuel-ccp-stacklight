@@ -9,7 +9,7 @@ AUTO_DISCOVERY_PATH="$1"
 #
 
 # Snap release, platform and architecture
-RELEASE=v0.15.0-beta-98-g0b228f5
+RELEASE=v0.15.0-beta-126-g9a05d66
 PLATFORM=linux
 ARCH=amd64
 TDIR=/tmp/snap
@@ -17,7 +17,7 @@ TDIR=/tmp/snap
 # Binary storage service URI components
 PROTOCOL=https
 HOST=bintray.com
-BASEURL="olivierbourdon38/Snap/download_file?file_path="
+BASEURL="mirantis/snap/download_file?file_path="
 
 mkdir -p $TDIR
 # Retrieve archived binaries and extract them in temporary location
