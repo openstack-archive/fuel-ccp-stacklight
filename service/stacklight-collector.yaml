@@ -19,6 +19,9 @@ service:
         - name: hindsight-output
           type: empty-dir
           path: /var/lib/hindsight/output
+        - name: hindsight-alarms
+          type: empty-dir
+          path: /var/lib/hindsight/load/analysis
       env:
         - name: CCP_HINDSIGHT_NODE_NAME
           valueFrom:
@@ -46,6 +49,22 @@ service:
           mount-path: /host-dev
       env:
         - name: CCP_SNAP_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+    - name: alarm-manager
+      image: alarm-manager
+      probes:
+        readiness: "true"
+        liveness: "true"
+      daemon:
+        command: /usr/local/bin/alarm-manager.py -w /etc/stacklight/alarming
+      volumes:
+        - name: hindsight-alarms
+          type: empty-dir
+          path: /var/lib/hindsight/load/analysis
+      env:
+        - name: CCP_HINDSIGHT_NODE_NAME
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
