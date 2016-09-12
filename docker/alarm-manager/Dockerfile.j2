@@ -1,0 +1,17 @@
+FROM {{ namespace }}/base-tools:{{ tag }}
+MAINTAINER {{ maintainer }}
+
+# Install alarm-manager and dependencies
+COPY alarm-manager.py /opt/ccp/bin/
+COPY requirements.txt /tmp/requirements.txt
+COPY config-files /etc/stacklight/alarming/
+
+RUN pip install -r /tmp/requirements.txt \
+    && mkdir -p /etc/stacklight/alarming/configured \
+    && useradd --user-group alarm-manager \
+    && usermod -a -G microservices alarm-manager \
+    && chown -R alarm-manager: /etc/stacklight \
+    && chmod 755 /opt/ccp/bin/alarm-manager.py \
+    && rm -f /tmp/requirements.txt
+
+USER alarm-manager
