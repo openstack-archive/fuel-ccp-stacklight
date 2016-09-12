@@ -1,0 +1,20 @@
+FROM {{ namespace }}/base:{{ tag }}
+MAINTAINER {{ maintainer }}
+
+# Install alarm-manager and dependencies
+COPY alarm-manager.py /opt/ccp/bin/
+COPY requirements.txt /tmp/requirements.txt
+COPY config-files /etc/alarm-manager/
+
+RUN apt-get install -y --no-install-recommends patch gcc python-dev \
+    && apt-get clean \
+    && pip install --no-cache-dir -r /tmp/requirements.txt \
+    && useradd --user-group alarm-manager \
+    && usermod -a -G microservices alarm-manager \
+    && chown -R alarm-manager: /etc/alarm-manager \
+    && chmod 755 /opt/ccp/bin/alarm-manager.py \
+    && rm -f /tmp/requirements.txt \
+    && apt-get -y purge patch gcc python-dev \
+    && apt-get -y autoremove
+
+USER alarm-manager

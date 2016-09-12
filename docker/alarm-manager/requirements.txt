@@ -1,0 +1,9 @@
+pyinotify==0.9.6
+# Mandatory utilities for use in CCP
+dumb-init  # init system for containers
+python-etcd
+netifaces
+six==1.10.0  # MIT
+# Common utilities
+PyYAML==3.12 # BSD License (3 clause)
+Jinja2==2.8  # MIT
