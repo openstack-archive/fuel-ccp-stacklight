@@ -1,0 +1,4 @@
+pyinotify==0.9.6
+# Common utilities
+PyYAML==3.12
+Jinja2==2.8
