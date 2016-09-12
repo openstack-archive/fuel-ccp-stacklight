@@ -1,0 +1,11 @@
+filename = "afd.lua"
+log_level = 7
+message_matcher = "TRUE"
+ticker_interval = 10
+{% raw %}
+afd_type = "node"
+afd_file = "{{ afd_file }}"
+afd_cluster_name = "{{ afd_cluster_name }}"
+afd_logical_name = "{{ afd_logical_name }}"
+{% endraw %}
+hostname = "{{ CCP_ALERT_MANAGER_NODE_NAME }}"
