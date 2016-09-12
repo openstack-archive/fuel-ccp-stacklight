@@ -12,6 +12,7 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 require "string"
+local dt     = require "date_time"
 local l      = require 'lpeg'
 l.locale(l)
 
@@ -37,13 +38,12 @@ local msg = {
 -- Different pieces of pattern
 local sp = patt.sp
 local colon = patt.colon
-local p_timestamp = l.digit^-4 * l.S("-") * l.digit^-2 * l.S("-") * l.digit^-2
-local p_date = l.digit^-2 * colon * l.digit^-2 * colon * l.digit^-2
+local p_timestamp = l.Cg(dt.rfc3339_full_date * sp^1 * dt.rfc3339_partial_time, "Timestamp")
 local p_thread_id = l.digit^-15
 local p_severity_label = l.P"[" * l.Cg(l.R("az", "AZ")^0 / string.upper, "SeverityLabel") * l.P"]"
 local p_message = l.Cg(patt.Message, "Message")
 
-local mysql_grammar = l.Ct(p_timestamp * sp^1 * p_date * sp^1 * p_thread_id * sp^1 * p_severity_label * sp^1 * p_message)
+local mysql_grammar = l.Ct(p_timestamp * sp^1 * p_thread_id * sp^1 * p_severity_label * sp^1 * p_message)
 
 
 function process_message ()
@@ -53,6 +53,7 @@ function process_message ()
     local m = mysql_grammar:match(log)
     if not m then return -1 end
 
+    msg.Timestamp = m.Timestamp
     msg.Logger = logger
     msg.Payload = m.Message
     msg.Fields.severity_label = m.SeverityLabel
