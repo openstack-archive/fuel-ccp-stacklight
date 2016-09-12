@@ -15,6 +15,7 @@ service:
           - prune-input.cfg
           - influxdb-tcp.cfg
           - kubelet-stats.cfg
+          - cpu-alarms.cfg
       volumes:
         - name: hindsight-output
           type: empty-dir
@@ -65,6 +66,10 @@ files:
   kubelet-stats.cfg:
     path: /var/lib/hindsight/run/input/kubelet_stats.cfg
     content: hindsight_kubelet_stats.cfg.j2
+    perm: "0600"
+  cpu-alarms.cfg:
+    path: /var/lib/hindsight/run/analysis/cpu_alarms.cfg
+    content: hindsight_cpu_alarms.cfg.j2
     perm: "0600"
   snap.conf:
     path: /etc/snap/snap.conf

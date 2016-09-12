@@ -15,10 +15,13 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 1FA22B08 \
        lua-sandbox-extensions \
     && cp /usr/share/luasandbox/sandboxes/heka/input/prune_input.lua \
           /usr/share/luasandbox/sandboxes/heka/input/heka_tcp.lua \
-          /var/lib/hindsight/run/input/
+          /var/lib/hindsight/run/input/ \
+    && mkdir -p /usr/lib/x86_64-linux-gnu/stacklight/modules/stacklight/
 
-ADD output/influxdb_tcp.lua /var/lib/hindsight/run/output/
-ADD input/kubelet_stats.lua /var/lib/hindsight/run/input/
+ADD output/*.lua /var/lib/hindsight/run/output/
+ADD input/*.lua /var/lib/hindsight/run/input/
+ADD analysis/*.lua /var/lib/hindsight/run/analysis/
+ADD modules/*.lua /usr/lib/x86_64-linux-gnu/luasandbox/modules/stacklight/
 
 RUN useradd --user-group hindsight \
     && usermod -a -G microservices hindsight \
