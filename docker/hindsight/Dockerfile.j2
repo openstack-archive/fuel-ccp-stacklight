@@ -19,6 +19,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 1FA22B08 \
 
 ADD output/*.lua /var/lib/hindsight/run/output/
 ADD input/*.lua /var/lib/hindsight/run/input/
+ADD analysis/*.lua /var/lib/hindsight/run/analysis/
 ADD modules/*.lua /opt/stacklight/modules/stacklight/
 
 RUN useradd --user-group hindsight \
