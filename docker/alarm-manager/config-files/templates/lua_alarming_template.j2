@@ -1,0 +1,41 @@
+local M = {}
+setfenv(1, M) -- Remove external access to contain everything in the module
+
+local alarms = {
+{% for alarm in alarms %}
+  {
+{% for fkey in alarm.keys()|sort() %}
+{% if fkey != "trigger" %}
+    ['{{ fkey }}'] = '{{ alarm[fkey] }}',
+{% endif %}
+{% endfor %}
+{% if alarm.trigger is defined %}
+    ['trigger'] = {
+{% if alarm.trigger.logical_operator is defined %}
+      ['logical_operator'] = '{{ alarm.trigger.logical_operator }}',
+{% endif %}
+      ['rules'] = {
+{% for rule in alarm.trigger.rules %}
+        {
+{% for fkey in rule.keys()|sort() %}
+{% if fkey != "fields" %}
+          ['{{ fkey }}'] = '{{ rule[fkey] }}',
+{% endif %}
+{% endfor %}
+{% if rule.fields is defined %}
+          ['fields'] = {
+{% for fkey in rule.fields.keys() %}
+              ['{{ fkey }}'] = '{{ rule.fields[fkey] }}'
+{% endfor %}
+          },
+{% endif %}
+        },
+{% endfor %}
+      },
+    },
+{% endif %}
+  },
+{% endfor %}
+}
+
+return alarms
