@@ -7,6 +7,10 @@ service:
       probes:
         readiness: "true"
         liveness: "true"
+      pre:
+        - name: service-bootstrap
+          type: local
+          command: /opt/ccp/bin/bootstrap-hindsight.sh
       daemon:
         command: /usr/bin/hindsight /etc/hindsight/hindsight.cfg
         files:
@@ -15,11 +19,13 @@ service:
           - prune-input.cfg
           - influxdb-tcp.cfg
           - kubelet-stats.cfg
-          - afd-node-default-cpu-alarms.cfg
       volumes:
-        - name: hindsight-output
+        - name: hindsight
           type: empty-dir
-          path: /var/lib/hindsight/output
+          path: /var/lib/hindsight
+        - name: stacklight-alarms
+          type: empty-dir
+          path: /opt/ccp/lua/modules/stacklight_alarms
       env:
         - name: CCP_HINDSIGHT_NODE_NAME
           valueFrom:
@@ -50,6 +56,28 @@ service:
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
+    - name: alarm-manager
+      image: alarm-manager
+      probes:
+        readiness: "true"
+        liveness: "true"
+      daemon:
+        command: /opt/ccp/bin/alarm-manager.py -w /etc/stacklight/alarming
+        files:
+          - alarms.yaml
+          - lua_cfg_template.j2
+      volumes:
+        - name: hindsight
+          type: empty-dir
+          path: /var/lib/hindsight
+        - name: stacklight-alarms
+          type: empty-dir
+          path: /opt/ccp/lua/modules/stacklight_alarms
+      env:
+        - name: CCP_ALERT_MANAGER_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
 files:
   hindsight.cfg:
     path: /etc/hindsight/hindsight.cfg
@@ -71,10 +99,6 @@ files:
     path: /var/lib/hindsight/run/input/kubelet_stats.cfg
     content: hindsight_kubelet_stats.cfg.j2
     perm: "0600"
-  afd-node-default-cpu-alarms.cfg:
-    path: /var/lib/hindsight/run/analysis/afd_node_default_cpu_alarms.cfg
-    content: hindsight_afd_node_default_cpu_alarms.cfg.j2
-    perm: "0600"
   snap.conf:
     path: /etc/snap/snap.conf
     content: snap.conf.j2
@@ -82,4 +106,12 @@ files:
   snap-task.json:
     path: /etc/snap/auto/task.json
     content: snap-task.json.j2
+    perm: "0600"
+  alarms.yaml:
+    path: /etc/stacklight/alarming/alarms.yaml
+    content: alarms.yaml
+    perm: "0600"
+  lua_cfg_template.j2:
+    path: /etc/stacklight/alarming/templates/alert_manager_lua_config_template.cfg.j2
+    content: alert_manager_lua_config_template.cfg.j2
     perm: "0600"
