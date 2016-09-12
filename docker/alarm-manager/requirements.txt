@@ -1,0 +1,5 @@
+inotify>=0.2.8
+pyinotify>=0.9.6
+# Common utilities
+PyYAML>=3.1.0
+Jinja2>=2.8

@@ -19,6 +19,9 @@ service:
         - name: hindsight-output
           type: empty-dir
           path: /var/lib/hindsight/output
+        - name: hindsight-alarms
+          type: empty-dir
+          path: /var/lib/hindsight/load/analysis
       env:
         - name: CCP_HINDSIGHT_NODE_NAME
           valueFrom:
@@ -49,6 +52,19 @@ service:
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
+    - name: alarm-manager
+      image: alarm-manager
+      probes:
+        readiness: "true"
+        liveness: "true"
+      daemon:
+        command: /opt/ccp/bin/alarm-manager.py -w /etc/stacklight/alarming
+        files:
+          - alarms.yaml
+      volumes:
+        - name: hindsight
+          type: empty-dir
+          path: /var/lib/hindsight
 files:
   hindsight.cfg:
     path: /etc/hindsight/hindsight.cfg
@@ -77,4 +93,8 @@ files:
   snap-task.json:
     path: /etc/snap/auto/task.json
     content: snap-task.json.j2
+    perm: "0600"
+  alarms.yaml:
+    path: /etc/stacklight/alarming/alarms.yaml
+    content: alarms.yaml
     perm: "0600"
