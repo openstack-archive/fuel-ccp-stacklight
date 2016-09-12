@@ -7,6 +7,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 COPY sources.mos.list /etc/apt/sources.list.d/
 COPY mos.pref /etc/apt/preferences.d/
+COPY bootstrap-hindsight.sh /opt/ccp/bin/
 
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 1FA22B08 \
     && apt-get update \
@@ -21,10 +22,10 @@ ADD output/*.lua /var/lib/hindsight/run/output/
 ADD input/*.lua /var/lib/hindsight/run/input/
 ADD analysis/*.lua /var/lib/hindsight/run/analysis/
 ADD modules/*.lua /opt/ccp/lua/modules/stacklight/
-ADD modules_alarms/afd_node_default_cpu_alarms.lua /opt/ccp/lua/modules/stacklight_alarms/
 
 RUN useradd --user-group hindsight \
     && usermod -a -G microservices hindsight \
-    && chown -R hindsight: /var/lib/hindsight /etc/hindsight
+    && chown -R hindsight: /var/lib/hindsight /etc/hindsight \
+    && tar cf - -C /var/lib hindsight | tar xf - -C /opt/ccp
 
 USER hindsight
