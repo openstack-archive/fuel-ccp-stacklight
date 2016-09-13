@@ -1,7 +1,7 @@
 service:
   name: influxdb
   ports:
-    - influxdb_port
+    - {{ influxdb_port }}
   containers:
     - name: influxdb
       image: influxdb
