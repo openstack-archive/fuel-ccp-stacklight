@@ -1,7 +1,7 @@
 output_path             = "/var/lib/hindsight/output"
 sandbox_load_path       = "/var/lib/hindsight/load"
 sandbox_run_path        = "/var/lib/hindsight/run"
-analysis_lua_path       = "/usr/lib/x86_64-linux-gnu/luasandbox/modules/?.lua"
+analysis_lua_path       = "/usr/lib/x86_64-linux-gnu/luasandbox/modules/?.lua;/opt/stacklight/modules/?.lua"
 analysis_lua_cpath      = "/usr/lib/x86_64-linux-gnu/luasandbox/modules/?.so"
 io_lua_path             = analysis_lua_path .. ";/usr/lib/x86_64-linux-gnu/luasandbox/io_modules/?.lua"
 io_lua_cpath            = analysis_lua_cpath .. ";/usr/lib/x86_64-linux-gnu/luasandbox/io_modules/?.so"
