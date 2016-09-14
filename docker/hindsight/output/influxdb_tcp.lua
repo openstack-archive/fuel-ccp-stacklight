@@ -5,6 +5,7 @@
 
 local os = require 'os'
 local http = require 'socket.http'
+local message = require 'stacklight.message'
 
 --local write  = require 'io'.write
 --local flush  = require 'io'.flush
@@ -30,7 +31,7 @@ local function escape_string(str)
     return tostring(str):gsub("([ ,])", "\\%1")
 end
 
-local function encode_value(value)
+local function encode_scalar_value(value)
     if type(value) == "number" then
         -- Always send numbers as formatted floats, so InfluxDB will accept
         -- them if they happen to change from ints to floats between
@@ -41,6 +42,21 @@ local function encode_value(value)
         return '"' .. value:gsub('"', '\\"') .. '"'
     elseif type(value) == "boolean" then
         return '"' .. tostring(value) .. '"'
+    end
+end
+
+local function encode_value(value)
+    if type(value) == "table" then
+        local values = {}
+        for k, v in pairs(value) do
+            table.insert(
+                values,
+                string.format("%s=%s", escape_string(k), encode_scalar_value(v))
+            )
+        end
+        return tablec.concat(values, ',')
+    else
+        return "value=" .. encode_scalar_value(value)
     end
 end
 
@@ -84,29 +100,12 @@ local function create_database()
 end
 
 
--- return the value and index of the last field with a given name
-local function read_field(name)
-    local i = -1
-    local value = nil
-    local variable_name = string.format('Fields[%s]', name)
-    repeat
-        local tmp = read_message(variable_name, i + 1)
-        if tmp == nil then
-            break
-        end
-        value = tmp
-        i = i + 1
-    until false
-    return value, i
-end
-
-
 -- create a line for the current message, return nil and an error string
 -- if the message is invalid
 local function create_line()
 
     local tags = {}
-    local dimensions, dimensions_index = read_field('dimensions')
+    local dimensions, dimensions_index = message.read_field('dimensions')
     if dimensions then
         local i = 0
         repeat
@@ -134,7 +133,7 @@ local function create_line()
         return nil, 'index of field "dimensions" should not be 0'
     end
 
-    local name, name_index = read_field('name')
+    local name, name_index = message.read_field('name')
     if name == nil then
         -- "name" is a required field
         return nil, 'field "name" is missing'
@@ -143,13 +142,9 @@ local function create_line()
         return nil, 'index of field "name" should not be 0'
     end
 
-    local value, value_index = read_field('value')
+    local value, err_msg = message.read_values(tags)
     if value == nil then
-        -- "value" is a required field
-        return nil, 'field "value" is missing'
-    end
-    if tags['value'] ~= nil and value_index == 0 then
-        return nil, 'index of field "value" should not be 0'
+        return nil, err_msg
     end
 
     local tags_array = {}
@@ -157,7 +152,7 @@ local function create_line()
         table.insert(tags_array, string.format('%s=%s', tag_key, tag_val))
     end
 
-    return string.format('%s,%s value=%s %d',
+    return string.format('%s,%s %s %d',
         escape_string(name),
         table.concat(tags_array, ','),
         encode_value(value),
