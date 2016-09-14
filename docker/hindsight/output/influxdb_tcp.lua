@@ -54,7 +54,7 @@ local function encode_value(value)
                 string.format("%s=%s", escape_string(k), encode_scalar_value(v))
             )
         end
-        return tablec.concat(values, ',')
+        return table.concat(values, ',')
     else
         return "value=" .. encode_scalar_value(value)
     end
