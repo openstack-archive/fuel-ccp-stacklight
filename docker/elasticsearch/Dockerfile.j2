@@ -4,7 +4,7 @@ MAINTAINER {{ maintainer }}
 ENV JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk-amd64/
 
 RUN apt-get -y install --no-install-recommends openjdk-8-jre \
-    && curl https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.3.3/elasticsearch-2.3.3.deb -o /tmp/elasticsearch.deb \
+    && curl https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/{{ elasticsearch_version }}/elasticsearch-{{ elasticsearch_version }}.deb -o /tmp/elasticsearch.deb \
     && dpkg -i /tmp/elasticsearch.deb \
     && rm -f /tmp/elasticsearch.deb \
     && apt-get clean
