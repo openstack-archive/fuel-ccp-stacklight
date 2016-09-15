@@ -29,6 +29,9 @@ service:
         files:
           - logrotate.conf
           - logrotate-services.conf
+          - curator-config
+          - curator-action-delete-indice
+          - curator-cronjob
 files:
   logrotate.conf:
     path: /etc/logrotate.conf
@@ -36,3 +39,13 @@ files:
   logrotate-services.conf:
     path: /etc/logrotate.d/logrotate-services.conf
     content: cron-logrotate-services.conf.j2
+  curator-config:
+    path: /etc/curator/curator.yaml
+    content: curator.yaml.j2
+  curator-action-delete-indice:
+    path: /etc/curator/curator-action-delete-indice.yaml
+    content: curator-action-delete-indice.yaml.j2
+  curator-cronjob:
+    path: /etc/cron.d/curator
+    content: curator-cronjob
+    perm: "0644"
