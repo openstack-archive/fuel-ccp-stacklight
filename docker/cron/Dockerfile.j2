@@ -5,4 +5,5 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get -y install --no-install-recommends \
         cron \
         logrotate \
-    && apt-get clean
+    && apt-get clean \
+    && pip install --no-cache-dir elasticsearch-curator
