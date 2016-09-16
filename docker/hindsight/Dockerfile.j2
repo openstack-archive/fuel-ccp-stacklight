@@ -19,7 +19,9 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 1FA22B08 \
 
 ADD output/*.lua /var/lib/hindsight/run/output/
 ADD input/*.lua /var/lib/hindsight/run/input/
+ADD analysis/*.lua /var/lib/hindsight/run/analysis/
 ADD modules/*.lua /opt/ccp/lua/modules/stacklight/
+ADD modules_alarms/afd_node_default_cpu_alarms.lua /opt/ccp/lua/modules/stacklight_alarms/
 
 RUN useradd --user-group hindsight \
     && usermod -a -G microservices hindsight \
