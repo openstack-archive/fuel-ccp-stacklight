@@ -1,7 +1,18 @@
 {
   "dashboard": {
     "annotations": {
-      "list": []
+      "list": [
+        {
+          "datasource": "CCP InfluxDB",
+          "enable": true,
+          "iconColor": "rgba(255, 96, 96, 1)",
+          "name": "Status",
+          "query": "select title,tags,text from annotation where hostname = '$hostname'",
+          "tagsColumn": "tags",
+          "textColumn": "text",
+          "titleColumn": "title"
+        }
+      ]
     },
     "editable": true,
     "hideControls": false,
@@ -3079,6 +3090,7 @@
               "rgba(50, 172, 45, 0.97)"
             ],
             "datasource": null,
+            "decimals": 0,
             "editable": true,
             "error": false,
             "format": "h",
@@ -3168,8 +3180,7 @@
                 "value": "null"
               }
             ],
-            "valueName": "current",
-            "decimals": 0
+            "valueName": "current"
           },
           {
             "aliasColors": {},
@@ -4047,6 +4058,6 @@
     },
     "timezone": "browser",
     "title": "System",
-    "version": 5
+    "version": 6
   }
 }
