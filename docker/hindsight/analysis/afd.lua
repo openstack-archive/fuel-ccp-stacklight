@@ -20,28 +20,25 @@ local afd_annotation = require 'stacklight.afd_annotation'
 
 -- node or service
 local afd_type = read_config('afd_type') or error('afd_type must be specified!')
-local msg_type
-local msg_field_name
-local afd_entity
+local afd_msg_type
+local afd_metric_name
 
 if afd_type == 'node' then
-    msg_type = 'afd_node_metric'
-    msg_field_name = 'node_status'
-    afd_entity = 'node_role'
+    afd_msg_type = 'afd_node_metric'
+    afd_metric_name = 'node_status'
 elseif afd_type == 'service' then
-    msg_type = 'afd_service_metric'
-    msg_field_name = 'service_status'
-    afd_entity = 'service'
+    afd_msg_type = 'afd_service_metric'
+    afd_metric_name = 'service_status'
 else
     error('invalid afd_type value')
 end
 
 -- ie: controller for node AFD / rabbitmq for service AFD
-local afd_entity_value = read_config('afd_cluster_name') or
+local afd_cluster_name = read_config('afd_cluster_name') or
     error('afd_cluster_name must be specified!')
 
 -- ie: cpu for node AFD / queue for service AFD
-local msg_field_source = read_config('afd_logical_name') or
+local afd_logical_name = read_config('afd_logical_name') or
     error('afd_logical_name must be specified!')
 
 local hostname = read_config('hostname') or error('hostname must be specified')
@@ -101,13 +98,13 @@ function timer_event(ns)
             --         value = 0,
             --         hostname = 'node1',
             --         source = 'cpu',
-            --         node_role = 'controller',
-            --         dimensions = {'node_role', 'source', 'hostname'},
+            --         cluster = 'system',
+            --         dimensions = {'cluster', 'source', 'hostname'},
             --     }
             -- }
             local msg = afd.inject_afd_metric(
-                msg_type, afd_entity, afd_entity_value, msg_field_name,
-                state, hostname, msg_field_source)
+                afd_msg_type, afd_metric_name, afd_cluster_name, afd_logical_name,
+                state, hostname)
 
             if msg then
                 afd_annotation.inject_afd_annotation(msg)

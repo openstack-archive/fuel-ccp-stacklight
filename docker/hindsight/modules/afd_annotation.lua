@@ -28,11 +28,12 @@ local annotation_msg = {
     Type = 'metric',
     Fields = {
         name = 'annotation',
-        dimensions = {'source', 'hostname'},
+        dimensions = {'cluster', 'source', 'hostname'},
         value_fields = {'title', 'tags', 'text'},
         title = nil,
         tags = nil,
         text = nil,
+        cluster = nil,
         source = nil,
         hostname = nil,
     }
@@ -46,8 +47,9 @@ function inject_afd_annotation(msg)
     local status = afd.read_status(msg)
     local hostname = afd.read_hostname(msg)
     local alarms = afd.extract_alarms(msg)
+    local cluster = afd.read_cluster(msg)
 
-    if not source or not status or not alarms then
+    if not source or not status or not hostname or not alarms or not cluster then
         return -1
     end
 
@@ -88,6 +90,7 @@ function inject_afd_annotation(msg)
     annotation_msg.Fields.text = text
     annotation_msg.Fields.source = source
     annotation_msg.Fields.hostname = hostname
+    annotation_msg.Fields.cluster = cluster
 
     -- store the last status and alarm text for future messages
     previous.status = status
