@@ -3,6 +3,6 @@ host = "influxdb"
 port = {{ influxdb_port }}
 database = "{{ influxdb_database }}"
 batch_max_lines = 3000
-message_matcher = "TRUE"
+message_matcher = "Type == 'metric'"
 ticker_interval = 10
 log_level = 7
