@@ -1,7 +1,6 @@
 FROM {{ namespace }}/base-tools:{{ tag }}
 MAINTAINER {{ maintainer }}
 
-ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get -y -t jessie-backports --no-install-recommends install golang \
     && apt-get clean
 
