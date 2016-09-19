@@ -3,8 +3,6 @@ MAINTAINER {{ maintainer }}
 
 # We use MOS packages for hindsight, lua_sandbox and lua_sandbox_extensions
 
-ENV DEBIAN_FRONTEND noninteractive
-
 COPY sources.mos.list /etc/apt/sources.list.d/
 COPY mos.pref /etc/apt/preferences.d/
 
