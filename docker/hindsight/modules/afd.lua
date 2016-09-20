@@ -43,6 +43,10 @@ function read_hostname(msg)
     return read_field(msg, 'hostname')
 end
 
+function read_cluster(msg)
+    return read_field(msg, 'cluster')
+end
+
 function extract_alarms(msg)
     local ok, payload = pcall(cjson.decode, msg.Payload)
     if not ok or not payload.alarms then
@@ -135,9 +139,9 @@ function reset_alarms()
     alarms = {}
 end
 
--- inject an AFD event into the Heka pipeline
-function inject_afd_metric(msg_type, msg_tag_name, msg_tag_value, metric_name,
-                           value, hostname, source)
+-- inject an AFD event into the pipeline
+function inject_afd_metric(msg_type, metric_name, cluster_name, logical_name,
+                           state, hostname)
     local payload
 
     if #alarms > 0 then
@@ -156,13 +160,13 @@ function inject_afd_metric(msg_type, msg_tag_name, msg_tag_value, metric_name,
         Payload = payload,
         Fields = {
             name = metric_name,
-            value = value,
+            value = state,
             hostname = hostname,
-            source = source,
-            dimensions = {msg_tag_name, 'hostname', 'source'},
+            cluster = cluster_name,
+            source = logical_name,
+            dimensions = {'cluster', 'hostname', 'source'},
         }
     }
-    msg.Fields[msg_tag_name] = msg_tag_value
 
     local err_code, err_msg = utils.safe_inject_message(msg)
 
