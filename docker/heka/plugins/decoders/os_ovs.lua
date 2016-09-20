@@ -69,6 +69,10 @@ function process_message ()
     local m = ovs_grammar:match(log)
     if not m then return -1 end
 
+    if m.SeverityLabel == "WARN" then
+        m.SeverityLabel = "WARNING"
+    end
+
     msg.Timestamp = m.Timestamp
     msg.Logger = service
     msg.Payload = m.Message
