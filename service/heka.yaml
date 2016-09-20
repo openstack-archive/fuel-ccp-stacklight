@@ -41,6 +41,11 @@ service:
           - heka-dockerlogs.toml
           - heka-keystone.toml
           - heka-horizon.toml
+      env:
+        - name: CCP_HEKA_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
 files:
   heka-global.toml:
     path: /etc/heka/heka-global.toml
