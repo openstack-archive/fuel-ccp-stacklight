@@ -3,14 +3,18 @@ MAINTAINER {{ maintainer }}
 
 ENV JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk-amd64/
 
-RUN apt-get -y install --no-install-recommends openjdk-8-jre \
+RUN apt-get -y install --no-install-recommends openjdk-8-jre jq \
     && curl https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/{{ elasticsearch_version }}/elasticsearch-{{ elasticsearch_version }}.deb -o /tmp/elasticsearch.deb \
     && dpkg -i /tmp/elasticsearch.deb \
     && rm -f /tmp/elasticsearch.deb \
     && apt-get clean
 
+COPY toolbox/es_search.sh /usr/local/sbin/
+
 RUN usermod -a -G microservices elasticsearch \
-    && chown -R elasticsearch: /usr/share/elasticsearch
+    && chown -R elasticsearch: /usr/share/elasticsearch \
+    && chown -R elasticsearch: /usr/local/sbin/es_search.sh \
+    && chmod +x /usr/local/sbin/es_search.sh
 
 # by default elasticsearch shell is /bin/false, we need
 # /bin/bash to run elasticsearch as non-root
