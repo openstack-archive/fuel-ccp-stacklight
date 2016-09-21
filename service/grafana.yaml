@@ -9,7 +9,9 @@ service:
         readiness: "true"
         liveness: "true"
       daemon:
-        command: /usr/sbin/grafana-server --homepath=/usr/share/grafana --config=/etc/grafana/grafana.ini cfg:default.paths.data=/var/lib/grafana cfg:default.paths.logs=/var/log/grafana
+        command: /usr/sbin/grafana-server --homepath=/usr/share/grafana --config=/etc/grafana/grafana.ini
+                   cfg:default.paths.data=/var/lib/grafana
+                   cfg:default.paths.logs=/var/log/grafana
         files:
           - grafana-configure.sh
       post:
