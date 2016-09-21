@@ -80,6 +80,7 @@ function process_message ()
     msg.Fields.module = m.Module
     msg.Fields.message_id = m.Message_ID
     msg.Fields.programname = program
+    msg.Fields.container_name = cont_name
     msg.Fields.severity_label = m.SeverityLabel
 
     return utils.safe_inject_message(msg)

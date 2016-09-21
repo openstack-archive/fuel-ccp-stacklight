@@ -40,7 +40,7 @@ local traceback_key = nil
 local traceback_lines = nil
 
 function prepare_message (service, timestamp, pid, severity_label,
-        python_module, programname, payload)
+        python_module, programname, cont_name, payload)
     msg.Logger = 'openstack.' .. service
     msg.Timestamp = timestamp
     msg.Payload = payload
@@ -50,6 +50,7 @@ function prepare_message (service, timestamp, pid, severity_label,
     msg.Fields.severity_label = severity_label
     msg.Fields.python_module = python_module
     msg.Fields.programname = programname
+    msg.Fields.container_name = cont_name
     msg.Payload = payload
 end
 
@@ -113,7 +114,7 @@ function process_message ()
             prepare_message(traceback_key.service, traceback_key.Timestamp,
                 traceback_key.Pid, traceback_key.SeverityLabel,
                 traceback_key.PythonModule, traceback_key.program,
-                table.concat(traceback_lines, ''))
+                cont_name, table.concat(traceback_lines, ''))
             traceback_key = nil
             traceback_lines = nil
             -- Ignore safe_inject_message status code here to still get a
@@ -132,7 +133,7 @@ function process_message ()
     end
 
     prepare_message(service, m.Timestamp, m.Pid, m.SeverityLabel, m.PythonModule,
-        program, m.Message)
+        program, cont_name, m.Message)
 
     m = patt.openstack_request_context:match(msg.Payload)
     if m then
