@@ -2221,6 +2221,7 @@
               "threshold2Color": "rgba(234, 112, 112, 0.22)"
             },
             "id": 10,
+            "interval": "> 60s",
             "isNew": true,
             "legend": {
               "avg": false,
@@ -2275,7 +2276,13 @@
                     },
                     {
                       "params": [],
-                      "type": "max"
+                      "type": "mean"
+                    },
+                    {
+                      "params": [
+                        "1s"
+                      ],
+                      "type": "derivative"
                     }
                   ]
                 ],
@@ -2324,7 +2331,13 @@
                     },
                     {
                       "params": [],
-                      "type": "max"
+                      "type": "mean"
+                    },
+                    {
+                      "params": [
+                        "1s"
+                      ],
+                      "type": "derivative"
                     }
                   ]
                 ],
@@ -2388,6 +2401,7 @@
               "threshold2Color": "rgba(234, 112, 112, 0.22)"
             },
             "id": 11,
+            "interval": "> 60s",
             "isNew": true,
             "legend": {
               "avg": false,
@@ -2442,7 +2456,13 @@
                     },
                     {
                       "params": [],
-                      "type": "max"
+                      "type": "mean"
+                    },
+                    {
+                      "params": [
+                        "1s"
+                      ],
+                      "type": "derivative"
                     }
                   ]
                 ],
@@ -2491,7 +2511,13 @@
                     },
                     {
                       "params": [],
-                      "type": "max"
+                      "type": "mean"
+                    },
+                    {
+                      "params": [
+                        "1s"
+                      ],
+                      "type": "derivative"
                     }
                   ]
                 ],
@@ -2555,6 +2581,7 @@
               "threshold2Color": "rgba(234, 112, 112, 0.22)"
             },
             "id": 12,
+            "interval": "> 60s",
             "isNew": true,
             "legend": {
               "avg": false,
@@ -2609,7 +2636,13 @@
                     },
                     {
                       "params": [],
-                      "type": "max"
+                      "type": "mean"
+                    },
+                    {
+                      "params": [
+                        "1s"
+                      ],
+                      "type": "derivative"
                     }
                   ]
                 ],
@@ -2658,7 +2691,13 @@
                     },
                     {
                       "params": [],
-                      "type": "max"
+                      "type": "mean"
+                    },
+                    {
+                      "params": [
+                        "1s"
+                      ],
+                      "type": "derivative"
                     }
                   ]
                 ],
@@ -4058,6 +4097,6 @@
     },
     "timezone": "browser",
     "title": "System",
-    "version": 6
+    "version": 7
   }
 }
