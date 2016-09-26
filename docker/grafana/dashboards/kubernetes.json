@@ -1016,7 +1016,7 @@
                 ]
               },
               {
-                "alias": "read all namespace",
+                "alias": "read all namespaces",
                 "dsType": "influxdb",
                 "groupBy": [
                   {
