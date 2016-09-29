@@ -26,11 +26,6 @@ service:
         - name: stacklight-alarms
           type: empty-dir
           path: /opt/ccp/lua/modules/stacklight_alarms
-      env:
-        - name: CCP_HINDSIGHT_NODE_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: spec.nodeName
     - name: snap
       image: snap
       probes:
@@ -51,11 +46,6 @@ service:
           type: host
           path: /dev
           mount-path: /host-dev
-      env:
-        - name: CCP_SNAP_NODE_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: spec.nodeName
     - name: alarm-manager
       image: alarm-manager
       probes:
@@ -73,11 +63,6 @@ service:
         - name: stacklight-alarms
           type: empty-dir
           path: /opt/ccp/lua/modules/stacklight_alarms
-      env:
-        - name: CCP_ALERT_MANAGER_NODE_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: spec.nodeName
 files:
   hindsight.cfg:
     path: /etc/hindsight/hindsight.cfg
