@@ -6,7 +6,7 @@ fields = ["Timestamp", "Type", "Logger", "Severity", "Payload", "Pid", "Hostname
 
 [elasticsearch_output]
 type = "ElasticSearchOutput"
-server = "http://elasticsearch:{{ elasticsearch_port }}"
+server = "http://elasticsearch:{{ elasticsearch.port }}"
 message_matcher = "Type == 'log'"
 encoder = "elasticsearch_json_encoder"
 use_buffering = true

@@ -1,7 +1,7 @@
 filename = "influxdb_tcp.lua"
 host = "influxdb"
-port = {{ influxdb_port }}
-database = "{{ influxdb_database }}"
+port = {{ influxdb.port }}
+database = "{{ influxdb.database }}"
 batch_max_lines = 3000
 message_matcher = "TRUE"
 ticker_interval = 10

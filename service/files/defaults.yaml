@@ -1,25 +1,33 @@
 configs:
-  elasticsearch_port: 9200
-  elasticsearch_cluster_port: 9300
-  elasticsearch_retention_period: 30
-  kibana_port: 5601
-  heka_max_procs: 2
-  heka_service_pattern: "^k8s_(.-)%..*"
+  elasticsearch:
+    port: 9200
+    cluster_port: 9300
+    retention_period: 30
+  kibana:
+    port: 5601
+  heka:
+    max_procs: 2
+    service_pattern: "^k8s_(.-)%..*"
   hindsight_heka_tcp_port: 5565
-  grafana_host: "grafana"
-  grafana_port: 3000
-  grafana_user: "admin"
-  grafana_password: "admin"
-  influxdb_database: "ccp"
-  influxdb_host: "influxdb"
-  influxdb_password: ""
-  influxdb_port: 8086
-  influxdb_user: ""
-  snap_log_level: 3
-  cron_rotate_interval: "daily"
-  cron_rotate_days: 6
-  cron_rotate_minsize: "1M"
-  cron_rotate_maxsize: "100M"
+  grafana:
+    host: "grafana"
+    port: 3000
+    user: "admin"
+    password: "admin"
+  influxdb:
+    database: "ccp"
+    host: "influxdb"
+    password: ""
+    port: 8086
+    user: ""
+  snap:
+    log_level: 3
+  cron:
+    rotate:
+      interval: "daily"
+      days: 6
+      minsize: "1M"
+      maxsize: "100M"
 versions:
   influxdb_version: "0.13.0"
   grafana_version: "3.0.3-1463994644"

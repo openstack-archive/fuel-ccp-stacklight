@@ -5,7 +5,7 @@ actions:
   1:
     action: delete_indices
     description: >-
-      Delete indices older than {{ elasticsearch_retention_period }} days
+      Delete indices older than {{ elasticsearch.retention_period }} days
       (based on index name), for 'log-' prefixed indices. Ignore the error
       if the filter does not result in an actionable list of indices
       (ignore_empty_list) and exit cleanly.
@@ -24,6 +24,6 @@ actions:
       direction: older
       timestring: '%Y.%m.%d'
       unit: days
-      unit_count: {{ elasticsearch_retention_period }}
+      unit_count: {{ elasticsearch.retention_period }}
       exclude:
 

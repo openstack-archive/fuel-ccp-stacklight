@@ -1,7 +1,7 @@
 service:
   name: grafana
   ports:
-    - {{ grafana_port }}
+    - {{ grafana.port }}
   containers:
     - name: grafana
       image: grafana

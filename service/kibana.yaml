@@ -1,7 +1,7 @@
 service:
   name: kibana
   ports:
-    - {{ kibana_port }}
+    - {{ kibana.port }}
   containers:
     - name: kibana
       image: kibana
