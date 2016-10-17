@@ -7,7 +7,9 @@ service:
       image: kibana
       probes:
         readiness: "true"
-        liveness: "true"
+        liveness:
+          path: "true"
+          type: "exec"
       daemon:
         command: /opt/kibana/bin/kibana
         dependencies:
