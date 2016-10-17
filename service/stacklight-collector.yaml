@@ -6,7 +6,9 @@ service:
       image: hindsight
       probes:
         readiness: "true"
-        liveness: "true"
+        liveness:
+          path: "true"
+          type: "exec"
       pre:
         - name: service-bootstrap
           type: local

@@ -6,7 +6,9 @@ service:
       image: heka
       probes:
         readiness: "true"
-        liveness: "true"
+        liveness:
+          path: "true"
+          type: "exec"
       volumes:
         - name: docker-sock
           type: host
