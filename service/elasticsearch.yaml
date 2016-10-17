@@ -8,7 +8,9 @@ service:
       image: elasticsearch
       probes:
         readiness: "true"
-        liveness: "true"
+        liveness:
+          command: "true"
+          type: "exec"
       daemon:
         command: /usr/share/elasticsearch/bin/elasticsearch
         files:
@@ -17,7 +19,9 @@ service:
       image: cron
       probes:
         readiness: "true"
-        liveness: "true"
+        liveness:
+          command: "true"
+          type: "exec"
       daemon:
         command: cron -f
         files:
