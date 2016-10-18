@@ -1,4 +1,4 @@
-FROM {{ namespace }}/base-tools:{{ tag }}
+FROM {{ image_spec("base-tools") }}
 MAINTAINER {{ maintainer }}
 
 # Install alarm-manager and dependencies

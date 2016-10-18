@@ -1,4 +1,4 @@
-FROM {{ namespace }}/base-tools:{{ tag }}
+FROM {{ image_spec("base-tools") }}
 MAINTAINER {{ maintainer }}
 
 # We use MOS packages for hindsight, lua_sandbox and lua_sandbox_extensions

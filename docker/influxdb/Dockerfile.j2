@@ -1,4 +1,4 @@
-FROM {{ namespace }}/base-tools:{{ tag }}
+FROM {{ image_spec("base-tools") }}
 MAINTAINER {{ maintainer }}
 
 # NOTE(elemoine): the InfluxDB package is downloaded from dl.influxdb.com. Do

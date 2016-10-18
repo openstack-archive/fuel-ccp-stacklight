@@ -1,4 +1,4 @@
-FROM {{ namespace }}/base-tools:{{ tag }}
+FROM {{ image_spec("base-tools") }}
 MAINTAINER {{ maintainer }}
 
 ENV JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk-amd64/
