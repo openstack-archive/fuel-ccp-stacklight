@@ -1,20 +1,20 @@
 #!/bin/bash
 
 echo "Waiting for Grafana to come up..."
-until $(curl --fail --output /dev/null --silent http://{{ grafana.user }}:{{ grafana.password }}@localhost:{{ grafana.port }}/api/org); do
+until $(curl --fail --output /dev/null --silent http://{{ grafana.user }}:{{ grafana.password }}@localhost:{{ grafana.port.cont }}/api/org); do
     printf "."
     sleep 2
 done
 echo -e "Grafana is up and running.\n"
 
 echo "Creating InfluxDB datasource..."
-curl -i -XPOST -H "Accept: application/json" -H "Content-Type: application/json" "http://{{ grafana.user }}:{{ grafana.password }}@localhost:{{ grafana.port }}/api/datasources" -d '
+curl -i -XPOST -H "Accept: application/json" -H "Content-Type: application/json" "http://{{ grafana.user }}:{{ grafana.password }}@localhost:{{ grafana.port.cont }}/api/datasources" -d '
 {
     "name": "CCP InfluxDB",
     "type": "influxdb",
     "access": "proxy",
     "isDefault": true,
-    "url": "'"http://{{ influxdb.host }}:{{ influxdb.port }}"'",
+    "url": "'"http://{{ influxdb.host }}:{{ influxdb.port.cont }}"'",
     "password": "'"{{ influxdb.password }}"'",
     "user": "'"{{ influxdb.user }}"'",
     "database": "'"{{ influxdb.database }}"'"
@@ -28,7 +28,7 @@ echo -e "InfluxDB datasource was successfully created.\n"
 echo "Importing default dashboards..."
 for dashboard in /dashboards/*.json; do
     echo -e "\tImporting ${dashboard}..."
-    curl -i -XPOST --data "@${dashboard}" -H "Accept: application/json" -H "Content-Type: application/json" "http://{{ grafana.user }}:{{ grafana.password}}@localhost:{{ grafana.port }}/api/dashboards/db"
+    curl -i -XPOST --data "@${dashboard}" -H "Accept: application/json" -H "Content-Type: application/json" "http://{{ grafana.user }}:{{ grafana.password}}@localhost:{{ grafana.port.cont }}/api/dashboards/db"
     if [ $? -ne 0 ]; then
         echo "Error importing ${dashboard}"
         exit 1

@@ -1,24 +1,30 @@
 configs:
   elasticsearch:
-    port: 9200
-    cluster_port: 9300
+    port:
+      cont: 9200
+    cluster_port:
+      cont: 9300
     retention_period: 30
   kibana:
-    port: 5601
+    port:
+      cont: 5601
   heka:
     max_procs: 2
     service_pattern: "^k8s_(.-)%..*"
-  hindsight_heka_tcp_port: 5565
+  hindsight_heka_tcp_port:
+    cont: 5565
   grafana:
     host: "grafana"
-    port: 3000
+    port:
+      cont: 3000
     user: "admin"
     password: "admin"
   influxdb:
     database: "ccp"
     host: "influxdb"
     password: ""
-    port: 8086
+    port:
+      cont: 8086
     user: ""
   snap:
     log_level: 3
