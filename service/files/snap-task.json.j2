@@ -100,7 +100,7 @@
         "plugin_name": "heka",
         "config": {
           "host": "localhost",
-          "port": {{ hindsight_heka_tcp_port }}
+          "port": {{ hindsight_heka_tcp_port.cont }}
         }
       }]
     }

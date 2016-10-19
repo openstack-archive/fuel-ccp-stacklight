@@ -13,5 +13,5 @@ reporting-disabled = true
 
 [http]
   auth-enabled = false  # FIXME(elemoine)
-  bind-address = "{{ network_topology["private"]["address"] }}:{{ influxdb.port }}"
+  bind-address = "{{ network_topology["private"]["address"] }}:{{ influxdb.port.cont }}"
   log-enabled = false
