@@ -1,6 +1,6 @@
 service:
   name: stacklight-collector
-  daemonset: true
+  kind: DaemonSet
   containers:
     - name: hindsight
       image: hindsight

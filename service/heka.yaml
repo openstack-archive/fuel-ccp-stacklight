@@ -1,6 +1,6 @@
 service:
   name: heka
-  daemonset: true
+  kind: DaemonSet
   containers:
     - name: heka
       image: heka
