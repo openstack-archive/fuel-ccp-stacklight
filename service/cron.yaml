@@ -1,6 +1,6 @@
 service:
   name: cron
-  daemonset: true
+  kind: DaemonSet
   containers:
     - name: cron
       image: cron
