@@ -14,7 +14,7 @@ curl -i -XPOST -H "Accept: application/json" -H "Content-Type: application/json"
     "type": "influxdb",
     "access": "proxy",
     "isDefault": true,
-    "url": "'"http://{{ influxdb.host }}:{{ influxdb.port.cont }}"'",
+    "url": "'"{{ address('influxdb', influxdb.port, with_scheme=True) }}"'",
     "password": "'"{{ influxdb.password }}"'",
     "user": "'"{{ influxdb.user }}"'",
     "database": "'"{{ influxdb.database }}"'"
