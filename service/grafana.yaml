@@ -6,11 +6,6 @@ service:
   containers:
     - name: grafana
       image: grafana
-      probes:
-        readiness: "true"
-        liveness:
-          command: "true"
-          type: "exec"
       daemon:
         command: /usr/sbin/grafana-server --homepath=/usr/share/grafana --config=/etc/grafana/grafana.ini
                    cfg:default.paths.data=/var/lib/grafana

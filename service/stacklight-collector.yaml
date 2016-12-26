@@ -5,11 +5,6 @@ service:
   containers:
     - name: hindsight
       image: hindsight
-      probes:
-        readiness: "true"
-        liveness:
-          command: "true"
-          type: "exec"
       pre:
         - name: service-bootstrap
           type: local
@@ -31,11 +26,6 @@ service:
           path: /opt/ccp/lua/modules/stacklight_alarms
     - name: snap
       image: snap
-      probes:
-        readiness: "true"
-        liveness:
-          command: "true"
-          type: "exec"
       privileged: true
       daemon:
         command: snapd --config /etc/snap/snap.conf
@@ -53,11 +43,6 @@ service:
           mount-path: /host-dev
     - name: alarm-manager
       image: alarm-manager
-      probes:
-        readiness: "true"
-        liveness:
-          command: "true"
-          type: "exec"
       daemon:
         command: /opt/ccp/bin/alarm-manager.py -w /etc/alarm-manager
         files:

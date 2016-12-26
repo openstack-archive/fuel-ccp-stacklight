@@ -7,22 +7,12 @@ service:
   containers:
     - name: elasticsearch
       image: elasticsearch
-      probes:
-        readiness: "true"
-        liveness:
-          command: "true"
-          type: "exec"
       daemon:
         command: /usr/share/elasticsearch/bin/elasticsearch
         files:
           - elasticsearch.yml
     - name: cron
       image: cron
-      probes:
-        readiness: "true"
-        liveness:
-          command: "true"
-          type: "exec"
       daemon:
         command: cron -f
         files:

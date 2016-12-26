@@ -5,11 +5,6 @@ service:
   containers:
     - name: heka
       image: heka
-      probes:
-        readiness: "true"
-        liveness:
-          command: "true"
-          type: "exec"
       volumes:
         - name: docker-sock
           type: host

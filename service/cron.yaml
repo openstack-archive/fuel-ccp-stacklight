@@ -5,11 +5,6 @@ service:
   containers:
     - name: cron
       image: cron
-      probes:
-        readiness: "true"
-        liveness:
-          command: "true"
-          type: "exec"
       volumes:
         - name: mysql-logs
           path: "/var/log/ccp/mysql"

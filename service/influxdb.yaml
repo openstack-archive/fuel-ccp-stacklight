@@ -6,11 +6,6 @@ service:
   containers:
     - name: influxdb
       image: influxdb
-      probes:
-        readiness: "true"
-        liveness:
-          command: "true"
-          type: "exec"
       daemon:
         command: influxd -config /etc/influxdb/influxdb.conf
         files:

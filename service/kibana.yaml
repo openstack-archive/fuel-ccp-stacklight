@@ -6,11 +6,6 @@ service:
   containers:
     - name: kibana
       image: kibana
-      probes:
-        readiness: "true"
-        liveness:
-          command: "true"
-          type: "exec"
       daemon:
         command: /opt/kibana/bin/kibana
         dependencies:
