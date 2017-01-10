@@ -12,6 +12,7 @@ RUN gpg \
     && gpg --batch --verify /tmp/influxdb.deb.asc /tmp/influxdb.deb \
     && dpkg -i /tmp/influxdb.deb \
     && chown -R influxdb: /etc/influxdb \
+    && usermod -a -G microservices influxdb \
     && rm -f /tmp/influxdb.deb.asc /tmp/influxdb.deb
 
 USER influxdb
