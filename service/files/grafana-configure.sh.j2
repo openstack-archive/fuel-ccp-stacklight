@@ -1,14 +1,16 @@
 #!/bin/bash
 
+GRAFANA_URL="http://{{ grafana.user }}:{{ grafana.password }}@{{ address('grafana') }}:{{ grafana.port.cont }}"
+
 echo "Waiting for Grafana to come up..."
-until $(curl --fail --output /dev/null --silent http://{{ grafana.user }}:{{ grafana.password }}@localhost:{{ grafana.port.cont }}/api/org); do
+until $(curl --fail --output /dev/null --silent ${GRAFANA_URL}/api/org); do
     printf "."
     sleep 2
 done
 echo -e "Grafana is up and running.\n"
 
 echo "Creating InfluxDB datasource..."
-curl -i -XPOST -H "Accept: application/json" -H "Content-Type: application/json" "http://{{ grafana.user }}:{{ grafana.password }}@localhost:{{ grafana.port.cont }}/api/datasources" -d '
+curl -i -XPOST -H "Accept: application/json" -H "Content-Type: application/json" "${GRAFANA_URL}/api/datasources" -d '
 {
     "name": "CCP InfluxDB",
     "type": "influxdb",
@@ -26,9 +28,9 @@ fi
 echo -e "InfluxDB datasource was successfully created.\n"
 
 echo "Importing default dashboards..."
-for dashboard in /dashboards/*.json; do
+for dashboard in /tmp/*.dashboard.json; do
     echo -e "\tImporting ${dashboard}..."
-    curl -i -XPOST --data "@${dashboard}" -H "Accept: application/json" -H "Content-Type: application/json" "http://{{ grafana.user }}:{{ grafana.password}}@localhost:{{ grafana.port.cont }}/api/dashboards/db"
+    curl -i -XPOST --data "@${dashboard}" -H "Accept: application/json" -H "Content-Type: application/json" "${GRAFANA_URL}/api/dashboards/db"
     if [ $? -ne 0 ]; then
         echo "Error importing ${dashboard}"
         exit 1
