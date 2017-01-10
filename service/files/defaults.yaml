@@ -13,12 +13,6 @@ configs:
     service_pattern: "^k8s_(.-)%..*"
   hindsight_heka_tcp_port:
     cont: 5565
-  grafana:
-    host: "grafana"
-    port:
-      cont: 3000
-    user: "admin"
-    password: "admin"
   influxdb:
     database: "ccp"
     host: "influxdb"
@@ -36,7 +30,6 @@ configs:
       maxsize: "100M"
 versions:
   influxdb_version: "0.13.0"
-  grafana_version: "3.0.3-1463994644"
   elasticsearch_version: "2.4.0"
   kibana_version: "4.6.1"
   elasticsearch_curator_version: "4.1.0"
