@@ -1,6 +1,9 @@
 FROM {{ image_spec("base-tools") }}
 MAINTAINER {{ maintainer }}
 
+# enable backports repo
+COPY {{ render('backports.sources.list.debian.j2') }} /etc/apt/sources.list.d/backports.list
+
 RUN apt-get -y -t jessie-backports --no-install-recommends install golang \
     && apt-get clean
 
