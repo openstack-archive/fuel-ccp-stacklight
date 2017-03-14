@@ -1,1 +1,0 @@
-@daily root curator --config /etc/curator/curator.yaml /etc/curator/action-delete-indice.yaml
